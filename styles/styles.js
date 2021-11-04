@@ -21,6 +21,19 @@ export const pageContainer = css`
   }
 `;
 
+const containerRight = css`
+  width: 35%;
+
+  @media (max-width: 450px) {
+    padding-top: 48px;
+    width: 100%;
+  }
+
+  img {
+    width: 100%;
+  }
+`;
+
 // Form Styles
 export const wrapper = css`
   display: flex;

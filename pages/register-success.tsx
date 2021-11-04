@@ -47,19 +47,6 @@ const containerLeft = css`
   }
 `;
 
-const containerRight = css`
-  width: 35%;
-
-  @media (max-width: 450px) {
-    padding-top: 48px;
-    width: 100%;
-  }
-
-  img {
-    width: 100%;
-  }
-`;
-
 export default function RegistrationSuccessful(props: Props) {
   return (
     <Layout username={props.username}>
@@ -87,7 +74,6 @@ export default function RegistrationSuccessful(props: Props) {
               </a>
             </Link>
           </div>
-          <div css={containerRight}></div>
         </div>
       </div>
     </Layout>

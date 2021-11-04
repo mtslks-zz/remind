@@ -6,8 +6,6 @@ import { Errors, Session, User, UserWithPasswordHash } from './types';
 
 // setPostgresDefaultsOnHeroku();
 
-// Read the PostgreSQL secret connection information
-// (host, database, username, password) from the .env file
 dotenvSafe.config();
 
 declare module globalThis {
@@ -15,8 +13,6 @@ declare module globalThis {
   let __postgresSqlClient: ReturnType<typeof postgres> | undefined;
 }
 
-// Connect only once to the database
-// https://github.com/vercel/next.js/issues/7811#issuecomment-715259370
 function connectOneTimeToDatabase() {
   let sql;
 
@@ -35,10 +31,9 @@ function connectOneTimeToDatabase() {
   return sql;
 }
 
-// Connect to PostgreSQL
 const sql = connectOneTimeToDatabase();
 
-// Perform a first query
+// Perform first query
 export async function getUsers() {
   const users = await sql<User[]>`
     SELECT
@@ -52,9 +47,7 @@ export async function getUsers() {
   return users.map((user) => camelcaseKeys(user));
 }
 
-// Secure version of getUsers which allows ANY authenticated user to view ALL users
 export async function getUsersIfValidSessionToken(token?: string) {
-  // Security: Return "Access denied" error if falsy token passed
   if (!token) {
     const errors: Errors[] = [
       { field: 'userAccess', message: 'Access denied' },
@@ -64,7 +57,6 @@ export async function getUsersIfValidSessionToken(token?: string) {
 
   const session = await getValidSessionByToken(token);
 
-  // Security: Return "Access denied" error if token does not match valid session
   if (!session) {
     const errors: Errors[] = [
       { field: 'tokenNotMatching', message: 'Access denied' },
@@ -72,41 +64,20 @@ export async function getUsersIfValidSessionToken(token?: string) {
     return errors;
   }
 
-  // Security: Now this query has been protected and it will only run in case the user has a token corresponding to a valid session
   const users = await sql<User[]>`
     SELECT
-      id,
-      first_name,
-      last_name,
-      username
+      users.id,
+      users.first_name,
+      users.last_name,
+      users.username
     FROM
+      sessions,
       users
+    WHERE
+      sessions.user_id = users.id
   `;
-
   return users.map((user) => camelcaseKeys(user));
 }
-
-// export async function insertUser(
-//   firstName: string,
-//   lastName: string,
-//   username: string,
-//   email: string,
-//   passwordHash: string,
-// ) {
-//   const users = await sql<[User]>`
-//     INSERT INTO users
-//       (first_name, last_name, username, email, password_hash)
-//     VALUES
-//       (${firstName}, ${lastName}, ${username}, ${email}, ${passwordHash})
-//     RETURNING
-//       id,
-//       first_name,
-//       last_name,
-//       username,
-//       email
-//   `;
-//   return users.map((user) => camelcaseKeys(user))[0];
-// }
 
 export async function createUser(
   firstName: string,
@@ -158,7 +129,6 @@ export async function deleteUserById(id: number) {
 }
 
 export async function getUserById(id?: number) {
-  // Return undefined if userId is not parsable to an integer
   if (!id) return undefined;
 
   const users = await sql<[User]>`
@@ -177,7 +147,6 @@ export async function getUserById(id?: number) {
 }
 
 export async function getUserByUsername(username: string | string[]) {
-  // Return undefined if userId is not parsable to an integer
   if (!username) return undefined;
 
   const users = await sql<[User]>`
@@ -198,16 +167,14 @@ export async function getUserByValidSessionToken(token: string) {
   const session = await getValidSessionByToken(token);
 
   if (!session) return undefined;
-
-  // once we have the session, we want to get the user information we call another function and pass the session.userId
   return await getUserById(session.userId);
 }
 
+// No access to profile, if user is not logged in
 export async function getUserByUsernameAndToken(
   username?: string,
   token?: string,
 ) {
-  // Security: If the user is not logged in, we do not allow access and return an error from the database function
   if (!token) {
     const errors: Errors[] = [
       { field: 'userNotLoggedIn', message: 'Access denied' },
@@ -215,17 +182,10 @@ export async function getUserByUsernameAndToken(
     return errors;
   }
 
-  // Return undefined if username is falsy
-  // (for example, an undefined or '' value for the username)
   if (!username) return undefined;
 
-  // Security: Retrieve user via the session token
   const userFromSession = await getUserByValidSessionToken(token);
 
-  // If there is either
-  // - no valid session matching the token
-  // - no user matching the valid session
-  // return undefined
   if (!userFromSession) return undefined;
 
   // Retrieve all matching users from database
@@ -243,18 +203,9 @@ export async function getUserByUsernameAndToken(
       username = ${username}
   `;
 
-  // ? will test if the first user exists or not
-  // it will be undefined in the case it cannot find a user
-  // only in the case it can find a user, it will do the property access
-
-  // to avoid the ?
-  // first test if the user exists
   const user = users[0];
-  // if it doesn't exist, stop the function by returning undefined
   if (!user) return undefined;
 
-  // Security: Match ids of session user with user
-  // corresponding to requested username
   if (user.id !== userFromSession.id) {
     const errors: Errors[] = [
       { field: 'idNotMatching', message: 'Access denied' },
@@ -278,32 +229,32 @@ export async function getUserWithPasswordHashByUsername(username: string) {
   return user && camelcaseKeys(user);
 }
 
-// update
-export async function updateUserById(
-  id: number,
-  {
-    name,
-    favoriteColor,
-  }: {
-    name: string;
-    favoriteColor: string;
-  },
-) {
-  const [user] = await sql<[User | undefined]>`
-    UPDATE
-      users
-    SET
-      name = ${name},
-      favorite_color = ${favoriteColor}
-    WHERE
-      id = ${id}
-    RETURNING
-      id,
-      name,
-      favorite_color;
-  `;
-  return user && camelcaseKeys(user);
-}
+// update below:
+// export async function updateUserById(
+//   id: number,
+//   {
+//     name,
+//     favoriteColor,
+//   }: {
+//     name: string;
+//     favoriteColor: string;
+//   },
+// ) {
+//   const [user] = await sql<[User | undefined]>`
+//     UPDATE
+//       users
+//     SET
+//       name = ${name},
+//       favorite_color = ${favoriteColor}
+//     WHERE
+//       id = ${id}
+//     RETURNING
+//       id,
+//       name,
+//       favorite_color;
+//   `;
+//   return user && camelcaseKeys(user);
+// }
 
 export async function getValidSessionByToken(token: string) {
   if (!token) return undefined;
@@ -321,37 +272,27 @@ export async function getValidSessionByToken(token: string) {
   return session && camelcaseKeys(session);
 }
 
-// export async function getUserByValidSessionToken(token: string) {
-//   if (!token) return undefined;
+// export async function getUserBySessionToken(sessionToken: string | undefined) {
+//   if (!sessionToken) return undefined;
 
-//   const session = await getValidSessionByToken(token);
-
-//   if (!session) return undefined;
-
-//   // once we have the session, we want to get the user information we call another function and pass the session.userId
-//   return await getUserById(session.userId);
+//   const [user] = await sql<[User | undefined]>`
+//     SELECT
+//       users.id,
+//       users.first_name,
+//       users.last_name,
+//       users.email,
+//       users.username
+//     FROM
+//       sessions,
+//       users
+//     WHERE
+//       sessions.token = ${sessionToken} AND
+//       sessions.user_id = users.id
+//   `;
+//   return user && camelcaseKeys(user);
 // }
 
-export async function getUserBySessionToken(sessionToken: string | undefined) {
-  if (!sessionToken) return undefined;
-
-  const [user] = await sql<[User | undefined]>`
-    SELECT
-      users.id,
-      users.first_name,
-      users.last_name,
-      users.email,
-      users.username
-    FROM
-      sessions,
-      users
-    WHERE
-      sessions.token = ${sessionToken} AND
-      sessions.user_id = users.id
-  `;
-  return user && camelcaseKeys(user);
-}
-
+// Sessions
 export async function createSession(token: string, userId: number) {
   const [session] = await sql<[Session]>`
     INSERT INTO sessions
@@ -363,17 +304,6 @@ export async function createSession(token: string, userId: number) {
   `;
 
   return camelcaseKeys(session);
-}
-
-export async function insertFiveMinuteSessionWithoutUserId(token: string) {
-  const sessions = await sql<Session[]>`
-    INSERT INTO sessions
-      (token, expiry)
-    VALUES
-      (${token}, NOW() + INTERVAL '5 minutes')
-    RETURNING *
-  `;
-  return sessions.map((session) => camelcaseKeys(session))[0];
 }
 
 export async function deleteExpiredSessions() {
@@ -393,6 +323,17 @@ export async function deleteSessionByToken(token: string) {
       sessions
     WHERE
       token = ${token}
+    RETURNING *
+  `;
+  return sessions.map((session) => camelcaseKeys(session))[0];
+}
+
+export async function insertFiveMinuteSessionWithoutUserId(token: string) {
+  const sessions = await sql<Session[]>`
+    INSERT INTO sessions
+      (token, expiry)
+    VALUES
+      (${token}, NOW() + INTERVAL '5 minutes')
     RETURNING *
   `;
   return sessions.map((session) => camelcaseKeys(session))[0];

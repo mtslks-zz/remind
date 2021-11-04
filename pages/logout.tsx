@@ -22,7 +22,6 @@ const imageContainer = css`
 `;
 
 export default function Logout(props: Props) {
-  // useEffect because this should run when the page loads
   useEffect(() => props.refreshUsername(), [props]);
   return (
     <Layout username={props.username}>
@@ -32,9 +31,6 @@ export default function Logout(props: Props) {
       <div css={pageContainer}>
         <h2>You have successfully logged out.</h2>
         <h3>We hope to see you soon again!</h3>
-        {/* <div css={imageContainer}>
-          <img src="log-out.svg" alt="Woman talking on phone and walking" />
-        </div> */}
       </div>
     </Layout>
   );
@@ -47,7 +43,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     await deleteSessionByToken(sessionToken);
   }
 
-  // deleting cookie from the browser
+  // delete cookie from browser again after logout
   context.res.setHeader(
     'Set-Cookie',
     cookie.serialize('sessionToken', '', {
