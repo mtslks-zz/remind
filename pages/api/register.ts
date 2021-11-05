@@ -42,7 +42,7 @@ export default async function registerHandler(
         errors: [
           {
             field: 'invalidSession',
-            message: 'Please choose a different username.',
+            message: 'Username taken. Please choose a different username.',
           },
         ],
       });

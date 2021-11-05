@@ -27,7 +27,7 @@ export default async function loginHandler(
         errors: [
           {
             field: 'usernameNotInDatabase',
-            message: 'Sorry, username or password did not match!',
+            message: 'Invalid login, please try again.',
           },
         ],
       });
@@ -44,7 +44,7 @@ export default async function loginHandler(
         errors: [
           {
             field: 'passwordHashMismatch',
-            message: 'Sorry, username or password did not match!',
+            message: 'Invalid login, please try again.',
           },
         ],
       });

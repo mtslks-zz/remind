@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Layout from '../components/Layout';
 import {
+  buttonContainer,
   imageContainer,
   inputFormStyle,
   pageContainer,
@@ -26,6 +27,11 @@ const newAccountStyle = css`
   }
 `;
 
+const errorMessage = css`
+  color: #ed0404;
+  padding-bottom: 15px;
+`;
+
 export default function Login(props: Props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -39,12 +45,6 @@ export default function Login(props: Props) {
       </Head>
       <div css={pageContainer}>
         <div css={wrapper}>
-          <div css={imageContainer}>
-            <img
-              src="./images/A-Human/login_woman.svg"
-              alt="Woman walking to the right"
-            />
-          </div>
           <div css={inputFormStyle}>
             <h2>Welcome back!</h2>
             <h3>Login to start tracking</h3>
@@ -105,13 +105,11 @@ export default function Login(props: Props) {
                     }}
                   />
                 </label>
+                <div css={errorMessage}>{error}</div>
               </div>
-
               <button data-cy="login-button" className="button-default">
                 Login
               </button>
-
-              <div style={{ color: 'red' }}>{error}</div>
             </form>
             <br />
             <div css={newAccountStyle}>

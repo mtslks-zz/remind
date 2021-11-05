@@ -13,7 +13,6 @@ type Props = {
 };
 
 export default function UserDeleted(props: Props) {
-  // useEffect because this should run when the page loads
   useEffect(() => props.refreshUsername(), [props]);
   return (
     <Layout username={props.username}>
@@ -21,7 +20,7 @@ export default function UserDeleted(props: Props) {
         <title>User deleted</title>
       </Head>
       <div css={pageContainer}>
-        <h2>You have successfully deleted your account.</h2>
+        <h2>Your account has been deleted successfully.</h2>
         <h3>We hope to see you soon again!</h3>
         <Link href="/register">
           <a className="button-default">Sign Up Again</a>

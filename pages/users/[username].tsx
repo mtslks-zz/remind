@@ -38,7 +38,7 @@ const containerLeft = css`
   .button-default {
     font-size: 1.3rem;
     margin-right: 24px;
-    border: 1px solid;
+    border: none;
 
     @media (max-width: 768px) {
       margin-right: 12px;
@@ -117,12 +117,23 @@ export default function SingleUserProfile(props: Props) {
       <div css={pageContainer}>
         <div css={contentContainer}>
           <div css={containerLeft}>
-            <h2>Welcome back, {props.user.firstName}!</h2>
+            <h2>
+              Logged in as <em>{props.user.username}</em>
+            </h2>
 
             <div className="userInformation">
-              <p>User Name: {props.user.username}</p>
-              <p>First Name: {props.user.firstName}</p>
-              <p>Last Name: {props.user.lastName}</p>
+              <p>
+                <strong>User Name:</strong> {props.user.username}
+              </p>
+              <p>
+                <strong>Email:</strong> {props.user.email}
+              </p>
+              <p>
+                <strong>First Name:</strong> {props.user.firstName}
+              </p>
+              <p>
+                <strong>Last Name:</strong> {props.user.lastName}
+              </p>
             </div>
             <button
               className="button-default"
@@ -205,20 +216,16 @@ export default function SingleUserProfile(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const response =
-    // Since we're fetching on the server side,
-    // the browser is not a part of this fetch
-    // and it is therefore not sending the cookies along
-    //
-    // This is using the node-fetch library internally
-    //
-    await fetch(`${process.env.API_BASE_URL}/users/${context.query.username}`, {
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/users/${context.query.username}`,
+    {
       method: 'GET',
       headers: {
-        // This forwards the cookie to the API route
+        // Forward cookie to the API route
         cookie: context.req.headers.cookie || '',
       },
-    });
+    },
+  );
   const json = (await response.json()) as SingleUserResponseType;
 
   console.log('API decoded JSON from response', json);

@@ -43,9 +43,6 @@ export default function Home(props: Props) {
                   <Link href="/register">
                     <a className="button-default">Sign Up</a>
                   </Link>
-                  // <Link href="/register">
-                  //   <a className="button-default">Sign Up</a>
-                  // </Link>
                 )}
               </div>
             </div>
@@ -54,6 +51,21 @@ export default function Home(props: Props) {
             <img src="./images/A-Human/hero_sitting.svg" alt="Person sitting" />
           </div>
         </div>
+        <div
+          style={{
+            borderTop: '1px solid lightgrey ',
+            marginLeft: 20,
+            marginRight: 20,
+          }}
+        />
+        {/* <div css={heroSectionHeading}>
+          <a>
+            “This app is wonderful. I can keep track of my mood over a series of
+            days and (re)mind myself (pun intended!) on bad days that life isn’t
+            so bad after all. All I have to do is look up my green mood cards on
+            my dashboard! Simple, yet effective!” -- Robin, UK
+          </a>
+        </div> */}
       </section>
     </>
   );

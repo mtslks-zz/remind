@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { navContainer } from '../styles/styles';
 
-export default function HeaderNavigation(props) {
+export default function HeaderNav(props) {
   return (
     <div css={navContainer(props.open)}>
       <ul>

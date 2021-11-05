@@ -18,11 +18,10 @@ const burgerMenuStyle = (open) => css`
   }
 
   div {
-    width: 2rem;
-    height: 0.15rem;
+    width: 2.2rem;
+    height: 2px;
     background-color: ${open ? '#FFFFFF' : '#FFFFFF'};
-    border-radius: 8px;
-    transform-origin: 1px;
+    transform-origin: 2px;
     transition: all 0.2s linear;
 
     &:nth-of-type(1) {

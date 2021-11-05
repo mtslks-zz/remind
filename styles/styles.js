@@ -1,20 +1,13 @@
 import { css } from '@emotion/react';
 
-// Color Palette
-export const darkGrey = '#001c00';
-export const green = '#A5CC82';
-export const blue = '#2C6371';
-export const lightBlue = '#2E7F82';
-export const lightGreen = '#F8FFF8';
-
 // Font sizes
-export const normalFontSize = '16px';
+export const normalFontSize = '14px';
 export const smallFontSize = '0.8rem';
 
 // Styles
 export const pageContainer = css`
   background-color: white;
-  padding: 128px;
+  padding: 96px 24px;
 
   @media (max-width: 768px) {
     padding: 96px 24px;
@@ -52,25 +45,26 @@ export const inputFormStyle = css`
   flex-direction: column;
   justify-content: center;
   align-items: left;
-  width: 30vh;
+  width: 35vh;
   padding-bottom: 128px;
 
   label {
     display: flex;
     flex-direction: column;
     text-align: left;
-    font-weight: 500;
+    font-weight: 300;
+    color: grey;
 
     input {
-      margin: 5px 0 20px 0;
-      width: 256px;
+      margin: 6px 0 20px 0;
+      width: 200px;
       padding: 12px 8px;
       transition: 0.3s ease-in-out;
-      border-radius: 10px;
-      border: 0.1rem solid;
+      border-radius: 8px;
+      border: 1px solid;
 
       :focus {
-        box-shadow: 0 0 8px grey;
+        box-shadow: 0 0 2px black;
         outline: none !important;
       }
     }
@@ -78,12 +72,14 @@ export const inputFormStyle = css`
 
   button {
     display: flex;
-    font-size: 1.5rem;
+    font-size: 1rem;
+    font-weight: 800;
     justify-content: center;
     align-items: center;
-    width: 20vh;
-    border: 0px solid;
-    border-radius: 10px;
+    width: 15vh;
+    border-radius: 20px;
+    border: none;
+    text-transform: uppercase;
   }
 `;
 
@@ -130,11 +126,11 @@ export const navItemsContainer = css`
     display: inline-grid;
     grid-auto-flow: row;
     list-style: none;
-    grid-gap: 24px;
+    grid-gap: 100px;
     justify-items: center;
     margin: auto;
 
-    @media (min-width: 500px) {
+    @media (min-width: 600px) {
       grid-auto-flow: column;
     }
   }
@@ -154,7 +150,7 @@ export const navItemsContainer = css`
     text-decoration: none;
 
     :hover {
-      font-weight: 400;
+      font-weight: 300;
       color: lightgrey;
     }
   }
@@ -172,7 +168,7 @@ export const navItemsContainer = css`
 export const headerStyle = css`
   width: 100%;
   height: 85px;
-  padding: 12px 128px;
+  padding: 12px 90px;
   display: flex;
   justify-content: space-between;
   background: linear-gradient(
@@ -256,7 +252,13 @@ export const navContainer = (open) => css`
   }
 
   .button-default {
-    margin: 12px 24px;
+    padding: 12px 24px;
+    background-color: #89c5cc;
+    border-radius: 20px;
+    cursor: pointer;
+    :hover {
+      background-color: #70acb3;
+    }
 
     @media (max-width: 1125px) {
       width: 140px;
@@ -271,7 +273,7 @@ export const navContainer = (open) => css`
     color: white;
 
     :hover {
-      font-weight: 400;
+      font-weight: 800;
     }
   }
 `;
@@ -313,7 +315,7 @@ export const heroSectionHeading = css`
   justify-content: center;
   align-items: center;
   width: 80%;
-  padding: 0px 32px;
+  padding: 0px 32px 64px;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -416,7 +418,7 @@ export const heroSectionImage = css`
     }
 
     @media (max-width: 450px) {
-      width: 200px;
+      width: 300px;
     }
   }
 `;

@@ -37,7 +37,7 @@ export default function Registration(props: Props) {
         <div css={wrapper}>
           <div css={inputFormStyle}>
             <h2>Register now...</h2>
-            <h3>Enter your details to start tracking with (re)mind</h3>
+            <h3>Enter your details to start tracking...</h3>
 
             <form
               onSubmit={async (event) => {
@@ -72,7 +72,7 @@ export default function Registration(props: Props) {
             >
               <div>
                 <label>
-                  Preferred username (required)
+                  Username
                   <input
                     data-cy="registration-username"
                     value={username}
@@ -86,11 +86,11 @@ export default function Registration(props: Props) {
 
               <div>
                 <label>
-                  Password (required)
+                  Password
                   <input
                     data-cy="registration-password"
                     value={password}
-                    placeholder=""
+                    placeholder="min. 8 characters"
                     type="password"
                     onChange={(event) => {
                       setPassword(event.currentTarget.value);
@@ -100,7 +100,7 @@ export default function Registration(props: Props) {
               </div>
               <div>
                 <label>
-                  Email (required)
+                  Email
                   <input
                     data-cy="registration-email"
                     value={email}
@@ -112,7 +112,7 @@ export default function Registration(props: Props) {
                   />
                 </label>
               </div>
-              <div>
+              {/* <div>
                 <label>
                   First Name (optional)
                   <input
@@ -138,7 +138,7 @@ export default function Registration(props: Props) {
                     }}
                   />
                 </label>
-              </div>
+              </div> */}
 
               <div
                 style={{
@@ -154,12 +154,12 @@ export default function Registration(props: Props) {
               </div>
             </form>
           </div>
-          <div css={imageContainer}>
+          {/* <div css={imageContainer}>
             <img
               src="./images/A-Human/register_flower.svg"
               alt="Plant in a vase"
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </Layout>

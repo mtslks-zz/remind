@@ -72,16 +72,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             padding: 12px 24px;
             background-color: #89c5cc;
             border-radius: 20px;
+            border: none;
             cursor: pointer;
             color: white;
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
             :hover {
-              background-color: lightblue;
+              background-color: #70acb3;
             }
           }
 
           a {
-            color: #9eaa9e;
             font-weight: 500;
           }
 

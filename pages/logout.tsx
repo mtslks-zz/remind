@@ -37,6 +37,8 @@ export default function Logout(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { serialize } = await import('cookie');
+
   const sessionToken = context.req.cookies.sessionToken;
 
   if (sessionToken) {
@@ -46,7 +48,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // delete cookie from browser again after logout
   context.res.setHeader(
     'Set-Cookie',
-    cookie.serialize('sessionToken', '', {
+    serialize('sessionToken', '', {
       maxAge: -1,
       path: '/',
     }),
