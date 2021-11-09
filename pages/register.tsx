@@ -74,7 +74,6 @@ export default function Registration(props: Props) {
                 <label>
                   Username
                   <input
-                    data-cy="registration-username"
                     value={username}
                     placeholder=""
                     onChange={(event) => {
@@ -88,10 +87,10 @@ export default function Registration(props: Props) {
                 <label>
                   Password
                   <input
-                    data-cy="registration-password"
                     value={password}
                     placeholder="min. 8 characters"
                     type="password"
+                    required
                     onChange={(event) => {
                       setPassword(event.currentTarget.value);
                     }}
@@ -102,21 +101,20 @@ export default function Registration(props: Props) {
                 <label>
                   Email
                   <input
-                    data-cy="registration-email"
                     value={email}
                     type="email"
-                    placeholder="e.g. max.mustermann@gmail.com"
+                    required
+                    placeholder=""
                     onChange={(event) => {
                       setEmail(event.currentTarget.value);
                     }}
                   />
                 </label>
               </div>
-              {/* <div>
+              <div>
                 <label>
                   First Name (optional)
                   <input
-                    data-cy="registration-first-name"
                     value={firstName}
                     placeholder=""
                     onChange={(event) => {
@@ -130,7 +128,6 @@ export default function Registration(props: Props) {
                 <label>
                   Last Name (optional)
                   <input
-                    data-cy="registration-last-name"
                     value={lastName}
                     placeholder=""
                     onChange={(event) => {
@@ -138,7 +135,7 @@ export default function Registration(props: Props) {
                     }}
                   />
                 </label>
-              </div> */}
+              </div>
 
               <div
                 style={{
@@ -150,16 +147,16 @@ export default function Registration(props: Props) {
                 {error}
               </div>
               <div css={buttonContainer}>
-                <button className="button-default">Sign up</button>
+                <button className="button-general">Sign up</button>
               </div>
             </form>
           </div>
-          {/* <div css={imageContainer}>
+          <div css={imageContainer}>
             <img
               src="./images/A-Human/register_flower.svg"
               alt="Plant in a vase"
             />
-          </div> */}
+          </div>
         </div>
       </div>
     </Layout>
@@ -181,9 +178,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  // Import needed libraries and functions
-  // eslint-disable-next-line unicorn/prefer-node-protocol
-  const crypto = await import('crypto');
+  const crypto = await import('node:crypto');
 
   const { createSerializedRegisterSessionTokenCookie } = await import(
     '../util/cookies'
@@ -195,7 +190,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     getValidSessionByToken,
   } = await import('../util/database');
 
-  // Import and initialize the `csrf` library
+  // Import and initialize the csrf library
   const tokensImport = await (await import('csrf')).default;
   const tokens = new tokensImport();
 
@@ -217,13 +212,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   await deleteExpiredSessions();
 
-  // Generate 5-min short-lived session ONLY for the registration
-  // User needs to complete registration process within 5 minutes
+  // 5-min registration session, user needs to complete within 5min
   const shortLivedSession = await insertFiveMinuteSessionWithoutUserId(
     crypto.randomBytes(64).toString('base64'),
   );
 
-  // Set new cookie for the short-lived session
+  // Set new cookie for short-lived session
   const cookie = createSerializedRegisterSessionTokenCookie(
     shortLivedSession.token,
   );

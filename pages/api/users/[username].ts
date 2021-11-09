@@ -14,13 +14,13 @@ export default async function singleUserHandler(
   req: NextApiRequest,
   res: NextApiResponse<SingleUserResponseType>,
 ) {
-  // Retrieve username from the query string (the square bracket notation in the filename)
+  // Retrieve username from query string
   const username = convertQueryValueString(req.query.username);
 
-  // Retrieve the session token from the cookie that has been forwarded from the frontend (in getServerSideProps in the page component file)
+  // Retrieve session token from cookie (forwarded from frontend in gSSP)
   const token = convertQueryValueString(req.cookies.sessionToken);
 
-  // Get either an array of errors OR a user
+  // Get an array of errors or a specific user
   const result = await getUserByUsernameAndToken(username, token);
 
   // Delete user
@@ -30,12 +30,11 @@ export default async function singleUserHandler(
     }
   }
 
-  // If we have received an array of errors, set the
-  // response accordingly
+  // Response to array of errors
   if (Array.isArray(result)) {
     return res.status(403).json({ errors: result });
   }
 
-  // If we've successfully retrieved a user, return that
+  // Retrieved user successfully
   return res.status(200).json({ user: result || null });
 }

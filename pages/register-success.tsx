@@ -30,7 +30,7 @@ const containerLeft = css`
     margin-bottom: 64px;
   }
 
-  .button-default {
+  .button-general {
     font-size: 1.3rem;
     margin-right: 24px;
     display: inline-block;
@@ -60,18 +60,10 @@ export default function RegistrationSuccessful(props: Props) {
             <h3>You’ve successfully created your account, {props.username}!</h3>
 
             <Link href="/dashboard">
-              <a data-cy="go-to-dashboard" className="button-default">
-                {' '}
-                Go to dashboard
-              </a>
+              <a className="button-general"> Go to dashboard</a>
             </Link>
             <Link href="/tiles/start">
-              <a
-                data-cy="registration-successful-create-entry"
-                className="button-default"
-              >
-                Create first entry
-              </a>
+              <a className="button-general">Create first entry</a>
             </Link>
           </div>
         </div>

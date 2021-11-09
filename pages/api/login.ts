@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
-import argon2 from 'argon2';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { verifyPassword } from '../../util/auth';
 import { createSerializedSessionTokenCookie as createSerializedRegisterSessionTokenCookie } from '../../util/cookies';
 import {
   createSession,
@@ -33,9 +33,9 @@ export default async function loginHandler(
       });
     }
 
-    const isPasswordVerified = await argon2.verify(
+    const isPasswordVerified = await verifyPassword(
+      req.body.password,
       userWithPasswordHash.passwordHash,
-      password,
     );
 
     // Password doesn't match hash in the database

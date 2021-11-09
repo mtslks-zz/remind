@@ -1,8 +1,8 @@
 import crypto from 'node:crypto';
-import argon2 from 'argon2';
 import Tokens from 'csrf';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { generateCsrfSecretByToken } from '../../util/auth';
+// bcrypt
+import { generateCsrfSecretByToken, hashPassword } from '../../util/auth';
 import { createSerializedSessionTokenCookie } from '../../util/cookies';
 import {
   createSession,
@@ -61,8 +61,7 @@ export default async function registerHandler(
 
     await deleteSessionByToken(sessionToken);
 
-    // Argon2 - create passwordHash
-    const passwordHash = await argon2.hash(password);
+    const passwordHash = await hashPassword(req.body.password);
 
     const user = await createUser(
       firstName,

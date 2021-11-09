@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import { pageContainer } from '../../styles/styles';
@@ -35,7 +36,7 @@ const containerLeft = css`
     margin-bottom: 64px;
   }
 
-  .button-default {
+  .button-general {
     font-size: 1.3rem;
     margin-right: 24px;
     border: none;
@@ -92,7 +93,6 @@ export default function SingleUserProfile(props: Props) {
     );
   }
 
-  // Show message if user does not exist
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!props.user) {
     return (
@@ -118,7 +118,10 @@ export default function SingleUserProfile(props: Props) {
         <div css={contentContainer}>
           <div css={containerLeft}>
             <h2>
-              Logged in as <em>{props.user.username}</em>
+              Logged in as{' '}
+              <strong>
+                <em>{props.user.username}</em>
+              </strong>
             </h2>
 
             <div className="userInformation">
@@ -136,7 +139,7 @@ export default function SingleUserProfile(props: Props) {
               </p>
             </div>
             <button
-              className="button-default"
+              className="button-general"
               onClick={async (event) => {
                 event.preventDefault();
                 if (
@@ -169,12 +172,12 @@ export default function SingleUserProfile(props: Props) {
               Edit profile
             </button>
             <button
-              className="button-default"
+              className="button-general"
               onClick={async (event) => {
                 event.preventDefault();
                 if (
                   !window.confirm(
-                    `Are you sure you want to delete your account? This action cannot be reversed!`,
+                    `Are you sure you want to delete your account? This cannot be reversed!`,
                   )
                 ) {
                   return;
@@ -201,14 +204,19 @@ export default function SingleUserProfile(props: Props) {
             >
               Delete account
             </button>
+            <button className="button-general">
+              <Link href="/logout">
+                <a>Logout</a>
+              </Link>
+            </button>
           </div>
-          <div css={containerRight}>
-            <img
-              src="../../images/A-Human/profile_standing.svg"
-              alt="Man with beard walking"
-              className="registrationImageStyle"
-            />
-          </div>
+        </div>
+        <div css={containerRight}>
+          <img
+            src="../../images/A-Human/profile_standing.svg"
+            alt="Man with beard walking"
+            className="registrationImageStyle"
+          />
         </div>
       </div>
     </Layout>
@@ -243,7 +251,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       // json is an object with a user property OR an error property
-      // if it has an error property, it's still rendering
       ...json,
     },
   };

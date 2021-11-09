@@ -1,5 +1,3 @@
-import { css } from '@emotion/react';
-import cookie from 'cookie';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';
@@ -7,21 +5,12 @@ import Layout from '../components/Layout';
 import { pageContainer } from '../styles/styles';
 import { deleteSessionByToken } from '../util/database';
 
-type Props = {
+type LogoutProps = {
   refreshUsername: () => void;
   username?: string;
 };
 
-const imageContainer = css`
-  height: 50%;
-  width: 50%;
-
-  img {
-    width: 100%;
-  }
-`;
-
-export default function Logout(props: Props) {
+export default function Logout(props: LogoutProps) {
   useEffect(() => props.refreshUsername(), [props]);
   return (
     <Layout username={props.username}>

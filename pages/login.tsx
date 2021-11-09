@@ -82,7 +82,6 @@ export default function Login(props: Props) {
                 <label>
                   Username:
                   <input
-                    data-cy="login-username"
                     value={username}
                     placeholder="Enter your (re)mind username"
                     onChange={(event) => {
@@ -96,9 +95,9 @@ export default function Login(props: Props) {
                 <label>
                   Password:
                   <input
-                    data-cy="login-password"
                     value={password}
                     type="password"
+                    required
                     placeholder="Enter your password"
                     onChange={(event) => {
                       setPassword(event.currentTarget.value);
@@ -107,9 +106,7 @@ export default function Login(props: Props) {
                 </label>
                 <div css={errorMessage}>{error}</div>
               </div>
-              <button data-cy="login-button" className="button-default">
-                Login
-              </button>
+              <button className="button-general">Login</button>
             </form>
             <br />
             <div css={newAccountStyle}>

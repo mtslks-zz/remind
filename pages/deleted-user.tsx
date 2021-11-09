@@ -23,7 +23,7 @@ export default function UserDeleted(props: Props) {
         <h2>Your account has been deleted successfully.</h2>
         <h3>We hope to see you soon again!</h3>
         <Link href="/register">
-          <a className="button-default">Sign Up Again</a>
+          <a className="button-general">Sign Up Again</a>
         </Link>
       </div>
     </Layout>

@@ -1,12 +1,18 @@
 import Link from 'next/link';
 import { navContainer } from '../styles/styles';
 
-export default function HeaderNav(props) {
+export type HeaderProps = {
+  open: any;
+  username: string;
+  setOpen: any;
+};
+
+export default function HeaderNav(props: HeaderProps) {
   return (
     <div css={navContainer(props.open)}>
       <ul>
         <Link href="/dashboard">
-          <a data-cy="header-dashboard-link">
+          <a>
             <li>Dashboard</li>
           </a>
         </Link>
@@ -20,25 +26,34 @@ export default function HeaderNav(props) {
             <li>Mood Cloud</li>
           </a>
         </Link>
-        <Link href={`/users/${props.username}`}>
+        <Link href="/register">
           <a>
-            <li>My profile</li>
+            <li>Register</li>
           </a>
         </Link>
         {props.username ? (
+          <Link href={`/users/${props.username}`}>
+            <a>
+              <li>My Profile</li>
+            </a>
+          </Link>
+        ) : (
+          ''
+        )}
+        {props.username ? (
           <Link href="/logout">
             <a>
-              <li>Logout</li>
+              <li>Log out</li>
             </a>
           </Link>
         ) : (
           <Link href="/login">
-            <a data-cy="header-login-link">
-              <li className="button-default">Login</li>
+            <a>
+              <li className="button-general">Login</li>
             </a>
           </Link>
         )}{' '}
-        {props.username && `${props.username}`}
+        <li>{props.username && `${props.username}`}</li>
       </ul>
     </div>
   );

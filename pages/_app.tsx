@@ -8,8 +8,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const [username, setUsername] = useState<string>();
 
   const refreshUsername = useCallback(async () => {
-    // Call the API to retrieve the user information
-    // by automatically passing along the sessionToken cookie
     const response = await fetch('/api/profile');
     const json = await response.json();
 
@@ -68,7 +66,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             font-weight: 300;
           }
 
-          .button-default {
+          .button-general {
             padding: 12px 24px;
             background-color: #89c5cc;
             border-radius: 20px;

@@ -60,7 +60,7 @@ export const inputFormStyle = css`
       width: 200px;
       padding: 12px 8px;
       transition: 0.3s ease-in-out;
-      border-radius: 8px;
+
       border: 1px solid;
 
       :focus {
@@ -226,6 +226,7 @@ export const navContainer = (open) => css`
     flex-flow: row nowrap;
     align-items: center;
     padding: 0;
+    line-height: 2.5rem;
 
     @media (max-width: 1125px) {
       flex-flow: column nowrap;
@@ -237,11 +238,11 @@ export const navContainer = (open) => css`
       position: fixed;
       top: 0px;
       right: 0;
-      height: 24vh;
+      height: 80vh;
       width: 190px;
       margin-top: 0.7rem;
       padding-top: 4rem;
-      border-radius: 8px;
+      border-radius: 5ypx;
       transform: ${open ? 'translateX(0)' : 'translateX(100%)'};
       transition: transform 0.7s ease-in-out;
     }
@@ -251,7 +252,7 @@ export const navContainer = (open) => css`
     padding: 12px 24px;
   }
 
-  .button-default {
+  .button-general {
     padding: 12px 24px;
     background-color: #89c5cc;
     border-radius: 20px;
@@ -297,7 +298,7 @@ export const heroSection = css`
 export const heroSectionHeadingImageContainer = css`
   display: flex;
   flex-direction: row;
-  padding: 0px 128px;
+  padding: 0px 128px 0px 64px;
 
   @media (max-width: 768px) {
     flex-direction: column;
