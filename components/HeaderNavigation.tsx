@@ -1,3 +1,5 @@
+import { css } from '@emotion/react';
+// import Image from 'next/image';
 import Link from 'next/link';
 import { navContainer } from '../styles/styles';
 
@@ -6,6 +8,13 @@ export type HeaderProps = {
   username: string;
   setOpen: any;
 };
+
+export const profileImage = css`
+  display: flex;
+  margin: 10px;
+  flex-direction: column;
+  justify-content: center;
+`;
 
 export default function HeaderNav(props: HeaderProps) {
   return (
@@ -16,44 +25,47 @@ export default function HeaderNav(props: HeaderProps) {
             <li>Dashboard</li>
           </a>
         </Link>
-        <Link href="/tiles/start">
+        <Link href="/tutorial">
           <a>
-            <li>New Entry</li>
+            <li>Tutorial</li>
           </a>
         </Link>
-        <Link href="/moodcloud">
+        <Link href="/contact">
           <a>
-            <li>Mood Cloud</li>
+            <li>Contact</li>
           </a>
         </Link>
-        <Link href="/register">
-          <a>
-            <li>Register</li>
-          </a>
-        </Link>
-        {props.username ? (
+        <li>
+          {props.username && (
+            <Link href={`/users/${props.username}`} passHref>
+              <img
+                css={profileImage}
+                src="/images/svg/user_icon.svg"
+                alt="User profile icon"
+                width={28}
+                height={28}
+              />
+            </Link>
+          )}{' '}
           <Link href={`/users/${props.username}`}>
-            <a>
-              <li>My Profile</li>
-            </a>
-          </Link>
-        ) : (
-          ''
-        )}
-        {props.username ? (
-          <Link href="/logout">
-            <a>
-              <li>Log out</li>
-            </a>
-          </Link>
-        ) : (
-          <Link href="/login">
-            <a>
-              <li className="button-general">Login</li>
-            </a>
-          </Link>
-        )}{' '}
-        <li>{props.username && `${props.username}`}</li>
+            <a>{props.username && `${props.username}`}</a>
+          </Link>{' '}
+        </li>
+        <li>
+          {props.username ? (
+            <Link href="/logout">
+              <a>
+                <li className="button-special">Logout</li>
+              </a>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <a>
+                <li className="button-general">Login</li>
+              </a>
+            </Link>
+          )}{' '}
+        </li>
       </ul>
     </div>
   );

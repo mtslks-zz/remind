@@ -1,6 +1,8 @@
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';
+// import { BrowserRouter as Router, useHistory } from 'react-router-dom';
+// import Header from '../components/Header';
 import Layout from '../components/Layout';
 import { pageContainer } from '../styles/styles';
 import { deleteSessionByToken } from '../util/database';
@@ -12,11 +14,18 @@ type LogoutProps = {
 
 export default function Logout(props: LogoutProps) {
   useEffect(() => props.refreshUsername(), [props]);
+  // const history = useHistory();
+
+  // setTimeout(() => {
+  //   history.push('/');
+  // }, 3000);
+
   return (
     <Layout username={props.username}>
       <Head>
-        <title>Logout page</title>
+        <title>Logged out successfully</title>
       </Head>
+
       <div css={pageContainer}>
         <h2>You have successfully logged out.</h2>
         <h3>We hope to see you soon again!</h3>

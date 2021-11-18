@@ -6,11 +6,6 @@ export type User = {
   email: string;
 };
 
-export type Author = {
-  userId: number;
-  username: string;
-};
-
 export type UserWithPasswordHash = User & {
   passwordHash: string;
 };
@@ -25,4 +20,20 @@ export type Session = {
 export type Errors = {
   field: string;
   message: string;
+};
+
+export type Tile = {
+  title: string;
+  userId: number;
+  moodId: number;
+  achievements: string;
+  gratitude: string;
+  day: number;
+  quote: string;
+  slug: string;
+};
+
+export type Mood = {
+  id: number;
+  title: string;
 };

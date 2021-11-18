@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import { useState } from 'react';
+import Header from '../components/Header';
 import Layout from '../components/Layout';
 import {
   buttonContainer,
@@ -90,6 +91,7 @@ export default function Registration(props: Props) {
                     value={password}
                     placeholder="min. 8 characters"
                     type="password"
+                    minLength={8}
                     required
                     onChange={(event) => {
                       setPassword(event.currentTarget.value);

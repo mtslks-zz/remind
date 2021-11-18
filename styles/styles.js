@@ -62,6 +62,7 @@ export const inputFormStyle = css`
       transition: 0.3s ease-in-out;
 
       border: 1px solid;
+      border-radius: 8px;
 
       :focus {
         box-shadow: 0 0 2px black;
@@ -99,19 +100,18 @@ export const imageContainer = css`
 export const footerStyle = css`
   width: 100%;
   height: 62px;
+  background: rgb(0, 18, 36);
   background: linear-gradient(
-    91.4deg,
-    #e4e4e4 0%,
-    rgba(75, 154, 227, 0.91) 0.01%,
-    rgba(33, 15, 237, 0.4) 63.54%,
-    rgba(96, 75, 227, 0.36) 99.98%,
-    rgba(75, 136, 227, 0.19) 99.99%,
-    rgba(96, 75, 227, 0) 100%,
-    rgba(96, 75, 227, 0) 100%
+    90deg,
+    rgba(0, 18, 36, 1) 0%,
+    rgba(0, 69, 255, 0.6755077030812324) 49%
   );
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: white;
 
   @media (max-width: 450px) {
     display: none;
@@ -170,8 +170,16 @@ export const headerStyle = css`
   height: 85px;
   padding: 12px 90px;
   display: flex;
+  font-size: 1.2rem;
+  letter-spacing: 3px;
   justify-content: space-between;
+  background: rgb(0, 18, 36);
   background: linear-gradient(
+    90deg,
+    rgba(0, 18, 36, 1) 0%,
+    rgba(0, 69, 255, 0.6755077030812324) 49%
+  );
+  /* background: linear-gradient(
     91.4deg,
     #e4e4e4 0%,
     rgba(75, 154, 227, 0.91) 0.01%,
@@ -179,8 +187,7 @@ export const headerStyle = css`
     rgba(96, 75, 227, 0.36) 99.98%,
     rgba(75, 136, 227, 0.19) 99.99%,
     rgba(96, 75, 227, 0) 100%,
-    rgba(96, 75, 227, 0) 100%
-  );
+    rgba(96, 75, 227, 0) 100% */
 
   font-weight: 400;
   position: fixed;
@@ -198,10 +205,11 @@ export const headerStyle = css`
 export const logoContainer = css`
   display: flex;
   align-items: center;
-  letter-spacing: 2px;
-  font-size: 1rem;
-  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-weight: 500;
   color: white;
+  font-size: 1.2rem;
 
   a {
     text-decoration: none;
@@ -210,6 +218,15 @@ export const logoContainer = css`
 
   img {
     width: 130px;
+  }
+`;
+
+export const logoStyle = css`
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+  img {
+    width: 150px;
   }
 `;
 
@@ -230,10 +247,11 @@ export const navContainer = (open) => css`
 
     @media (max-width: 1125px) {
       flex-flow: column nowrap;
+      background: rgb(0, 18, 36);
       background: linear-gradient(
-        180deg,
-        rgba(125, 111, 182, 0.57),
-        rgba(100, 78, 123, 0.4446)
+        0deg,
+        rgba(0, 18, 36, 1) 0%,
+        rgba(0, 69, 255, 0.6755077030812324) 49%
       );
       position: fixed;
       top: 0px;
@@ -249,11 +267,14 @@ export const navContainer = (open) => css`
   }
 
   li {
-    padding: 12px 24px;
+    padding: 24px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .button-general {
-    padding: 12px 24px;
+    padding: 6px 24px;
     background-color: #89c5cc;
     border-radius: 20px;
     cursor: pointer;
@@ -269,9 +290,34 @@ export const navContainer = (open) => css`
     }
   }
 
+  .button-special {
+    padding: 6px 24px;
+    background-color: #b2dfee;
+    border-radius: 20px;
+    cursor: pointer;
+    width: fill;
+    :hover {
+      background-color: #9ac0cd;
+    }
+
+    @media (max-width: 1125px) {
+      width: 140px;
+      margin: 12px;
+      text-align: center;
+      padding: 6px 12px;
+    }
+  }
+
+  img {
+    align-items: center;
+    justify-content: center;
+  }
+
   a {
     text-decoration: none;
     color: white;
+    justify-content: center;
+    align-items: center;
 
     :hover {
       font-weight: 800;
@@ -284,7 +330,7 @@ export const heroSection = css`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   min-height: 100%;
   position: relative;
@@ -315,7 +361,8 @@ export const heroSectionHeading = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  width: 60%;
+  height: 100%;
   padding: 0px 32px 64px;
 
   @media (max-width: 768px) {
@@ -422,4 +469,105 @@ export const heroSectionImage = css`
       width: 300px;
     }
   }
+`;
+
+// Tile Styles
+const tileContainer = css`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+`;
+
+const buttonsContainer = css`
+  margin-bottom: 64px;
+
+  button,
+  select {
+    margin-right: 32px;
+
+    @media (max-width: 450px) {
+      margin-bottom: 12px;
+      margin-right: 6px;
+    }
+  }
+`;
+
+const tilesContainer = css`
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 16px;
+  border: 1px solid green;
+  box-shadow: 5px 5px 8px #a5cc8252;
+  width: 330px;
+  height: 470px;
+  margin: 0 32px 64px 32px;
+
+  :hover {
+    transform: translate(0, -10px);
+  }
+
+  @media (max-width: 768px) {
+    margin: 0 18px 64px 18px;
+    width: 300px;
+    height: 500px;
+  }
+
+  @media (max-width: 450px) {
+    margin: 0 18px 64px 18px;
+    width: 300px;
+    height: 480px;
+  }
+
+  h3 {
+    margin-bottom: 0px;
+    padding: 6px;
+    text-align: center;
+  }
+`;
+
+const tileTopStyle = css`
+  background-color: green;
+  border-radius: 16px 16px 0 0;
+
+  a {
+    color: green;
+  }
+
+  h3 {
+    margin-bottom: 12px;
+  }
+`;
+
+const tileBottomStyle = css`
+  background-color: white;
+  border-radius: 0 0 16px 16px;
+  padding: 32px;
+
+  @media (max-width: 400px) {
+    padding: 18px;
+  }
+`;
+
+const userAndCategoryStyle = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 12px;
+  text-align: center;
+  font-size: 0.7rem;
+  margin-bottom: 16px;
+
+  .userInfo {
+    margin-right: 6px;
+  }
+
+  .resourceInfo {
+    padding-top: 6px;
+  }
+`;
+
+const publicNoteStyle = css`
+  margin-bottom: 16px;
 `;

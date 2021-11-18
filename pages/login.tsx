@@ -4,14 +4,9 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+// import Header from '../components/Header';
 import Layout from '../components/Layout';
-import {
-  buttonContainer,
-  imageContainer,
-  inputFormStyle,
-  pageContainer,
-  wrapper,
-} from '../styles/styles';
+import { inputFormStyle, pageContainer, wrapper } from '../styles/styles';
 import { getValidSessionByToken } from '../util/database';
 import { LoginResponse } from './api/login';
 
@@ -40,86 +35,88 @@ export default function Login(props: Props) {
 
   return (
     <Layout username={props.username}>
-      <Head>
-        <title>(re)mind Login</title>
-      </Head>
-      <div css={pageContainer}>
-        <div css={wrapper}>
-          <div css={inputFormStyle}>
-            <h2>Welcome back!</h2>
-            <h3>Login to start tracking</h3>
+      <>
+        <Head>
+          <title>(re)mind Login</title>
+        </Head>
+        <div css={pageContainer}>
+          <div css={wrapper}>
+            <div css={inputFormStyle}>
+              <h2>Welcome back!</h2>
+              <h3>Login to start tracking</h3>
 
-            <form
-              onSubmit={async (event) => {
-                event.preventDefault();
+              <form
+                onSubmit={async (event) => {
+                  event.preventDefault();
 
-                // Send the username and password to the API for verification
-                const response = await fetch(`/api/login`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    username: username,
-                    password: password,
-                  }),
-                });
+                  // Send the username and password to the API for verification
+                  const response = await fetch(`/api/login`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      username: username,
+                      password: password,
+                    }),
+                  });
 
-                const json = (await response.json()) as LoginResponse;
+                  const json = (await response.json()) as LoginResponse;
 
-                if ('errors' in json) {
-                  setError(json.errors[0].message);
-                  return;
-                }
+                  if ('errors' in json) {
+                    setError(json.errors[0].message);
+                    return;
+                  }
 
-                props.refreshUsername();
+                  props.refreshUsername();
 
-                // Navigate to the user's page when account has been successfully created
-                router.push(`/users/${json.user.username}`);
-              }}
-            >
-              <div>
-                <label>
-                  Username:
-                  <input
-                    value={username}
-                    placeholder="Enter your (re)mind username"
-                    onChange={(event) => {
-                      setUsername(event.currentTarget.value);
-                    }}
-                  />
-                </label>
+                  // Navigate to the user's page when account has been successfully created
+                  router.push(`/users/${json.user.username}`);
+                }}
+              >
+                <div>
+                  <label>
+                    Username:
+                    <input
+                      value={username}
+                      placeholder="Enter your (re)mind username"
+                      onChange={(event) => {
+                        setUsername(event.currentTarget.value);
+                      }}
+                    />
+                  </label>
+                </div>
+
+                <div>
+                  <label>
+                    Password:
+                    <input
+                      value={password}
+                      type="password"
+                      required
+                      placeholder="Enter your password"
+                      onChange={(event) => {
+                        setPassword(event.currentTarget.value);
+                      }}
+                    />
+                  </label>
+                  <div css={errorMessage}>{error}</div>
+                </div>
+                <button className="button-general">Login</button>
+              </form>
+              <br />
+              <div css={newAccountStyle}>
+                {' '}
+                <Link href="/register">
+                  <a>
+                    <span>...or create a new account</span>
+                  </a>
+                </Link>
               </div>
-
-              <div>
-                <label>
-                  Password:
-                  <input
-                    value={password}
-                    type="password"
-                    required
-                    placeholder="Enter your password"
-                    onChange={(event) => {
-                      setPassword(event.currentTarget.value);
-                    }}
-                  />
-                </label>
-                <div css={errorMessage}>{error}</div>
-              </div>
-              <button className="button-general">Login</button>
-            </form>
-            <br />
-            <div css={newAccountStyle}>
-              {' '}
-              <Link href="/register">
-                <a>
-                  <span>...or create a new account</span>
-                </a>
-              </Link>
             </div>
           </div>
         </div>
-      </div>
+      </>
     </Layout>
   );
 }
@@ -151,7 +148,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     // https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
     return {
       redirect: {
-        destination: `/tiles/start`,
+        destination: `/dashboard`,
         permanent: false,
       },
     };

@@ -62,7 +62,7 @@ export default function RegistrationSuccessful(props: Props) {
             <Link href="/dashboard">
               <a className="button-general"> Go to dashboard</a>
             </Link>
-            <Link href="/tiles/start">
+            <Link href="/dashboard">
               <a className="button-general">Create first entry</a>
             </Link>
           </div>
