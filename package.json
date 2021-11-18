@@ -15,6 +15,7 @@
     "@types/cookie": "^0.4.1",
     "@types/dotenv-safe": "^8.1.2",
     "@types/js-cookie": "^3.0.1",
+    "ansi-regex": "^6.0.1",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "camelcase-keys": "^7.0.1",
