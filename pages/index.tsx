@@ -44,7 +44,7 @@ export default function Home(props: Props) {
                 </p>
                 <div css={buttonContainer}>
                   {props.username ? (
-                    <Link href="/tiles">
+                    <Link href="/dashboard">
                       <a className="button-general">Go To My Dashboard</a>
                     </Link>
                   ) : (
