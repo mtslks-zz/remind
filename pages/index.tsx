@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 // import Header from '../components/Header';
 import Layout from '../components/Layout';
@@ -56,9 +57,11 @@ export default function Home(props: Props) {
               </div>
             </div>
             <div css={heroSectionImage}>
-              <img
-                src="./images/A-Human/hero_sitting.svg"
+              <Image
+                src="/images/A-Human/hero_sitting.svg"
                 alt="Person sitting"
+                width="300px"
+                height="500px"
               />
             </div>
           </div>

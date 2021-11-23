@@ -1,8 +1,12 @@
+import 'react-quill/dist/quill.snow.css';
 import { GetServerSidePropsContext } from 'next';
+// import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { Button, Form, Input, ModalBody, ModalFooter } from 'reactstrap';
+import { AllTiles } from '../../components/AllTiles';
 import Layout from '../../components/Layout';
 import {
   headingStyle,
@@ -12,51 +16,24 @@ import {
 } from '../../styles/styles';
 import { getMood } from '../../util/database';
 
+// const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+
 type Props = {
   username?: string;
-  // moodId: number;
-  allTiles: any;
-  // gratitude: string;
-  // achievements: string;
-  // allTilesByValidSessionUser: any;
+  // allTiles: any;
+  moods: Mood[];
+  userId: number;
 };
 
-export default function Jobs(props: Props) {
-  const [day, setDay] = useState('');
-  const [achievements, setAchievements] = useState('');
-  const [gratitude, setGratitude] = useState('');
-  const [moodId, setMoodId] = useState('');
+type Mood = {
+  id: number;
+  title: string;
+};
+
+export default function Tiles(props: Props) {
   const [errors, setErrors] = useState<any[]>();
+  const [day, setDay] = useState('');
   const router = useRouter();
-  const [allTiles, setAllTiles] = useState(props.allTiles);
-
-  async function clickHandler() {
-    const response = await fetch(`/api/tiles/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // send request body to API route
-      body: JSON.stringify({
-        day: day,
-        moodId: moodId,
-        achievements: achievements,
-        gratitude: gratitude,
-      }),
-    });
-
-    const {
-      errors: [errorMessage],
-    } = await response.json();
-
-    // Check if there is an errorMessage inside the json and update state
-    if (errorMessage) {
-      // console.log('error in create.tsx', errorMessage);
-      setErrors(errorMessage);
-      return;
-    }
-    router.push(`/dashboard`);
-  }
 
   return (
     <Layout username={props.username}>
@@ -72,8 +49,110 @@ export default function Jobs(props: Props) {
             <div css={heroSectionHeading}>
               <div css={headingStyle}>
                 <h2 className="header1-text">
-                  Your Dashboard, {props.username}
+                  Welcome to your Dashboard, {props.username}
                 </h2>
+
+                <p>
+                  <h3>Create new entry for {day}</h3>
+                </p>
+
+                <form
+                  onSubmit={async (event) => {
+                    event.preventDefault();
+                    console.log(props.userId);
+
+                    const response = await fetch(`/api/dashboard/create`, {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      // send request body to API route
+                      body: JSON.stringify({
+                        day: day,
+                        userId: props.userId,
+                        moodId: Number(event.currentTarget.mood.value),
+                        achievements: event.currentTarget.achievements.value,
+                        gratitude: event.currentTarget.gratitude.value,
+                      }),
+                    });
+
+                    const responseJson = await response.json();
+                    console.log(responseJson);
+
+                    // Check if there is an errorMessage inside the json and update state
+                    if ('errors' in responseJson) {
+                      // console.log('error in create.tsx', errorMessage);
+                      setErrors(responseJson.errors);
+                      return;
+                    }
+                    router.reload();
+                    // router.push(`/dashboard`);
+                  }}
+                >
+                  <p>Select </p>
+                  <Input
+                    className="calendar-modal"
+                    type="date"
+                    placeholder="dd/mm/yyyy"
+                    value={day}
+                    required
+                    onChange={(event) => {
+                      setDay(event.currentTarget.value);
+                    }}
+                  />
+                  <p>How do you feel today?</p>
+                  <select id="mood" name="mood">
+                    <option value="">Select Mood</option>
+                    {props.moods.map((mood) => {
+                      return (
+                        <option key={mood.id} value={mood.id}>
+                          {mood.title}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  {/* <Input
+                      type="select"
+                      value={moodId}
+                      onChange={(event) => {
+                        setMoodId(event.currentTarget.value);
+                      }}
+                    >
+                      <option value="">Select Mood</option>
+
+                      {props.moods.map((mood) => {
+                        return (
+                          <option key={mood.id} value={mood.id}>
+                            {mood.title}
+                          </option>
+                        );
+                      })}
+                    </Input> */}
+                  <p>What are some achievements you are aiming for today?</p>
+                  <textarea
+                    name="achievements"
+                    // value={achievements}
+                    placeholder="What are some achievements you are aiming for"
+                    max-length="10000"
+                  />
+
+                  {/* <ReactQuill
+                      className="quill"
+                      name="achievements"
+                      value={achievements}
+                      placeholder="* today I have achieved ..."
+                      onChange={setAchievements}
+                    /> */}
+                  <p>What are you grateful for today?</p>
+                  <textarea
+                    name="gratitude"
+                    // value={achievements}
+                    placeholder="What are your grateful for"
+                    max-length="10000"
+                  />
+
+                  <button>Create entry</button>
+                </form>
               </div>
             </div>{' '}
           </div>
@@ -84,6 +163,8 @@ export default function Jobs(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { getValidSessionByToken } = await import('../../util/database');
+
   if (
     context.req.headers.host &&
     context.req.headers['x-forwarded-proto'] &&
@@ -97,19 +178,42 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const response = await fetch(`${process.env.API_BASE_URL}/dashboard`, {
-    method: 'GET',
-    headers: {
-      cookie: context.req.headers.cookie || '',
-    },
-  });
+  // Authorization: Allow only logged-in users
+  const isValidSession = await getValidSessionByToken(
+    context.req.cookies.sessionToken,
+  );
+
+  if (!isValidSession) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/login?returnTo=/dashboard',
+      },
+    };
+  }
+
+  // const response = await fetch(`${process.env.API_BASE_URL}/dashboard`, {
+  //   method: 'GET',
+  //   headers: {
+  //     cookie: context.req.headers.cookie || '',
+  //   },
+  // });
 
   // Wait for the response of the fetch inside /dashboard/index.ts and then transform it into json
 
   // ERROR: receiving it as text instead of json because it comes back in non-json format...
-  const json = await response.text();
-
+  // const json = await response.json();
+  const moods = await getMood();
+  // console.log(moods);
   return {
-    props: { json },
+    props: { moods, userId: isValidSession.userId },
   };
 }
+
+// const profileResponse = await fetch(`${baseUrl}/api/user/${validSession.userId}`);
+//   const profileInfo = await profileResponse.json();
+
+// const profileResponse = await fetch(`${baseUrl}/api/user/${allowedUser.id}`);
+//   const profileInfo = await profileResponse.json();
+
+// const profileInfo = await getProfileInfoByUserId(Number(req.query.user));

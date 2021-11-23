@@ -15,6 +15,21 @@ type Props = {
   username?: string;
 };
 
+const formContainer = css`
+  display: flex;
+  box-shadow: 0 7px 17px rgb(0 0 0 / 13%);
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  width: 25vw;
+  //background-color: orange;
+  border-radius: 8px;
+  border: 1px solid black;
+  padding: 5px;
+  height: 95%;
+`;
+
 const newAccountStyle = css`
   text-align: center;
   .span {
@@ -41,7 +56,7 @@ export default function Login(props: Props) {
         </Head>
         <div css={pageContainer}>
           <div css={wrapper}>
-            <div css={inputFormStyle}>
+            <div css={formContainer}>
               <h2>Welcome back!</h2>
               <h3>Login to start tracking</h3>
 

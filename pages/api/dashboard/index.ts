@@ -21,15 +21,15 @@ export default async function singleTileHandler(
 
   // Check if valid session is defined
   if (validSession) {
-    // Retrieve jobs of valid session user
+    // Retrieve tiles of valid session user
     allTilesByValidSessionUser = await getTilesByValidSessionUser(
       validSession.userId,
     );
   } else {
-    // return res.status(404).json({ errors: [{ message: 'No valid session.' }] });
+    return res.status(404).json({ errors: [{ message: 'No valid session.' }] });
   }
 
-  // If we've successfully retrieved the jobs, return them
+  // Once the tiles are retrieved, return them
   return res.status(200).json({
     allTiles: allTiles,
     isSessionValid: isSessionValid,

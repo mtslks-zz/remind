@@ -1,18 +1,14 @@
-// This is the description of the change
-// to the database
 exports.up = async function up(sql) {
   await sql`
-    CREATE TABLE mood (
+    CREATE TABLE moods (
       id integer PRIMARY KEY,
-			title varchar(50) NOT NULL
+      title varchar(100) NOT NULL
     )
   `;
 };
 
-// This is the description of the REVERSE
-// of the change to the database
 exports.down = async function down(sql) {
   await sql`
-    DROP TABLE mood
+    DROP TABLE moods
   `;
 };

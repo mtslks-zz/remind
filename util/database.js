@@ -276,49 +276,61 @@ export async function insertFiveMinuteSessionWithoutUserId(token) {
   return sessions.map((session) => camelcaseKeys(session))[0];
 }
 
-// Inserting tiles into dashboard
-export async function createTile(
+// Inserting details into tiles table
+export async function createTile(userId, moodId, achievements, gratitude) {
+  const tiles = await sql`
+    INSERT INTO tiles
+      (user_id, mood_id, achievements, gratitude)
+    VALUES
+      (${userId},  ${moodId}, ${achievements}, ${gratitude})
+    RETURNING
+    user_id, mood_id, achievements, gratitude
+  `;
+  return tiles.map((tile) => camelcaseKeys(tile))[0];
+}
+
+export async function insertTile({
   userId,
   day,
   moodId,
   achievements,
-  gratitudes,
-  slug,
-) {
-  const sessions = await sql`
+  gratitude,
+}) {
+  const tile = await sql`
     INSERT INTO tiles
-      (user_id, day, mood_id, achievements, gratitudes, slug)
+    (user_id, day, mood_id, achievements, gratitude)
     VALUES
-      (${userId}, ${day}, ${moodId}, ${achievements},  ${gratitudes}, ${slug} )
+    (${userId}, ${day}, ${moodId}, ${achievements}, ${gratitude})
     RETURNING
-    user_id, day, mood_id, achievements, gratitudes slug
-  `;
-  return sessions.map((s) => camelcaseKeys(s))[0];
+    user_id, day, mood_id, achievements, gratitude
+    `;
+  return tile && camelcaseKeys(tile)[0];
 }
 
 // prepare for filter function by mood of the day (= mod)
 export async function getMood() {
-  const mood = await sql`
+  const moods = await sql`
   SELECT
-      id
+      id,
+      title
     FROM
-      mood
+      moods
   `;
-  return mood.map((mod) => camelcaseKeys(mod));
+  return moods.map((mood) => camelcaseKeys(mood));
 }
 
 export async function getMoodById(moodId) {
   if (!moodId) return undefined;
 
-  const mood = await sql`
+  const moods = await sql`
   SELECT
     id
   FROM
-    mood
+    moods
   WHERE
     id = ${moodId}
   `;
-  return mood.map((mod) => camelcaseKeys(mod))[0];
+  return moods.map((mood) => camelcaseKeys(mood))[0];
 }
 
 export async function getAllTiles(token) {
@@ -345,11 +357,11 @@ export async function getTilesByValidSessionUser(validSessionUserId) {
     tiles.day,
     tiles.mood_id,
     tiles.achievements,
-    tiles.gratitudes
+    tiles.gratitude
     FROM
       tiles,
       achievements,
-      gratitudes,
+      gratitude,
       mood
     WHERE
       tiles.user_id = ${validSessionUserId}
@@ -381,7 +393,7 @@ export async function getTileByTileId(tileId) {
       tiles.id,
       mood_id,
       achievements,
-      gratitudes
+      gratitude
     FROM
       tiles
     WHERE
@@ -404,4 +416,21 @@ export async function getTilesByUserId(userId) {
      user_id = ${userId};
   `;
   return tiles.map((tile) => camelcaseKeys(tile));
+}
+
+export async function getEmailByTileId(tileId) {
+  if (!tileId) return undefined;
+
+  const tiles = await sql`
+    SELECT
+      tiles.id,
+      tiles.day,
+      users.email
+    FROM
+      tiles,
+      users
+    WHERE
+      tiles.id = ${tileId}
+  `;
+  return tiles.map((tile) => camelcaseKeys(tile))[0];
 }

@@ -18,8 +18,8 @@ export type Session = {
 };
 
 export type Errors = {
-  field: string;
   message: string;
+  field: string;
 };
 
 export type Tile = {

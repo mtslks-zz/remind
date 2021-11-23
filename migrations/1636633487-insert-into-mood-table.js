@@ -1,4 +1,4 @@
-const mood = [
+const moods = [
   { id: 1, title: 'Not good' },
   { id: 2, title: 'Could be better' },
   { id: 3, title: 'Average' },
@@ -8,17 +8,17 @@ const mood = [
 
 exports.up = async function up(sql) {
   await sql`
-    INSERT INTO mood ${sql(mood, 'id', 'title')}
+    INSERT INTO moods ${sql(moods, 'id', 'title')}
   `;
 };
 
 exports.down = async function down(sql) {
-  for (const mod of mood) {
+  for (const mood of moods) {
     await sql`
       DELETE FROM
-        mood
+        moods
       WHERE
-      title = ${mod.title}
+        mood_id = ${mood.title}
     `;
   }
 };

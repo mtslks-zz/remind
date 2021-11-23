@@ -3,11 +3,18 @@ import { css } from '@emotion/react';
 // import { Image } from 'cloudinary-react';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Layout from '../../components/Layout';
-import { pageContainer } from '../../styles/styles';
+import {
+  headingStyle,
+  heroSection,
+  heroSectionHeading,
+  heroSectionHeadingImageContainer,
+  pageContainer,
+} from '../../styles/styles';
 import { Errors, User } from '../../util/types';
 import { SingleUserResponseType } from '../api/users/[username]';
 
@@ -152,36 +159,38 @@ export default function UserProfile(props: Props) {
           User profile {props.user.firstName} {props.user.lastName}
         </title>
       </Head>
-      <div css={pageContainer}>
-        <div css={contentContainer}>
-          <div css={containerLeft}>
-            <h2>
-              Logged in as{' '}
-              <strong>
-                <em>{props.user.username}</em>
-              </strong>
-            </h2>
 
-            <div className="userInformation">
-              <p>
-                <strong>User Name:</strong> {props.user.username}
-              </p>
-              <p>
-                <strong>Email:</strong> {props.user.email}
-              </p>
-              <p>
-                <strong>First Name:</strong> {props.user.firstName}
-              </p>
-              <p>
-                <strong>Last Name:</strong> {props.user.lastName}
-              </p>
-            </div>
-            {/* <Image
+      <div css={heroSection}>
+        <div css={heroSectionHeadingImageContainer}>
+          <div css={heroSectionHeading}>
+            <div css={headingStyle}>
+              <h2>
+                Logged in as{' '}
+                <strong>
+                  <em>{props.user.username}</em>
+                </strong>
+              </h2>
+
+              <div className="userInformation">
+                <p>
+                  <strong>User Name:</strong> {props.user.username}
+                </p>
+                <p>
+                  <strong>Email:</strong> {props.user.email}
+                </p>
+                <p>
+                  <strong>First Name:</strong> {props.user.firstName}
+                </p>
+                <p>
+                  <strong>Last Name:</strong> {props.user.lastName}
+                </p>
+              </div>
+              {/* <Image
               style={{ width: 200 }}
               cloudName="dng1aerxw"
               publicId={setImage}
             /> */}
-            {/* <div>
+              {/* <div>
               <input
                 type="file"
                 onChange={(event) => {
@@ -189,57 +198,60 @@ export default function UserProfile(props: Props) {
                 }}
               />
             </div> */}
-            {/* <div>
+              {/* <div>
               <button className="button-general" onClick={uploadImage}>
                 Update avatar
               </button>
             </div> */}
-            <button
-              className="button-general"
-              onClick={async (event) => {
-                event.preventDefault();
-                if (
-                  !window.confirm(
-                    `Are you sure you want to delete your account? This cannot be reversed!`,
-                  )
-                ) {
-                  return;
-                }
+              <button
+                className="button-general"
+                onClick={async (event) => {
+                  event.preventDefault();
+                  if (
+                    !window.confirm(
+                      `Are you sure you want to delete your account? This cannot be reversed!`,
+                    )
+                  ) {
+                    return;
+                  }
 
-                const response = await fetch(
-                  `/api/users/${props.user.username}`,
-                  {
-                    method: 'DELETE',
-                    headers: {
-                      'Content-Type': 'application/json',
+                  const response = await fetch(
+                    `/api/users/${props.user.username}`,
+                    {
+                      method: 'DELETE',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        username: props.user.username,
+                      }),
                     },
-                    body: JSON.stringify({
-                      username: props.user.username,
-                    }),
-                  },
-                );
+                  );
 
-                await response.json();
+                  await response.json();
 
-                // Navigate to deleted page after deleting account
-                router.push(`/deleted-user`);
-              }}
-            >
-              Delete account
-            </button>
-            <button className="button-general">
-              <Link href="/logout">
-                <a>Logout</a>
-              </Link>
-            </button>
+                  // Navigate to deleted page after deleting account
+                  router.push(`/deleted-user`);
+                }}
+              >
+                Delete account
+              </button>
+              <button className="button-general">
+                <Link href="/logout">
+                  <a>Logout</a>
+                </Link>
+              </button>
+            </div>
           </div>
-        </div>
-        <div css={containerRight}>
-          <img
-            src="../../images/A-Human/profile_standing.svg"
-            alt="Man with beard walking"
-            className="registrationImageStyle"
-          />
+          <div css={containerRight}>
+            <Image
+              src="/images/A-Human/profile_standing.svg"
+              alt="Man with beard walking"
+              className="registrationImageStyle"
+              width={300}
+              height={500}
+            />
+          </div>
         </div>
       </div>
     </Layout>
