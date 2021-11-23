@@ -1,9 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  getUserById,
-  getValidSessionByToken,
-  insertTile,
-} from '../../../util/database';
+import { insertTile } from '../../../util/database';
 import { Errors, User } from '../../../util/types';
 
 export type CreateTileResponse =
@@ -56,30 +52,3 @@ export default async function createTileHandler(
 
   return res.status(405);
 }
-
-//     // Declare variables for form validation
-//     const responseErrorObject: Errors[] = [];
-//     let responseStatusCode: number = 200;
-
-//     // Save the tile information to the database
-//     let tile;
-
-//       const user = await getUserById(tile?.userId);
-
-//       // Send response to frontend
-//       if (responseErrorObject.length > 0) {
-//         // If there are errors, return status code and errors to frontend
-//         return res
-//           .status(responseStatusCode)
-//           .json({ errors: [responseErrorObject] });
-//       } else {
-//         // Return tile info and user response to frontend
-//         return res.status(200).json({
-//           tile: tile,
-//           user: user,
-//           errors: [],
-//         });
-//       }
-//     }
-//   }
-// }

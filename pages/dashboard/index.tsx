@@ -1,11 +1,11 @@
-import 'react-quill/dist/quill.snow.css';
+// import 'react-quill/dist/quill.snow.css';
+import { css } from '@emotion/react';
 import { GetServerSidePropsContext } from 'next';
-// import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { Button, Form, Input, ModalBody, ModalFooter } from 'reactstrap';
+import { Input } from 'reactstrap';
 import { AllTiles } from '../../components/AllTiles';
 import Layout from '../../components/Layout';
 import {
@@ -15,14 +15,34 @@ import {
   heroSectionHeadingImageContainer,
 } from '../../styles/styles';
 import { getMood } from '../../util/database';
+import { Tile } from '../../util/types';
 
-// const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const singleTileContainer = css`
+  background-color: #ecf6ff;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  padding: 20px;
+`;
+
+const tileGrid = css`
+  display: flex;
+  align-items: center;
+
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-gap: 1.3rem;
+  a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 80px;
+  }
+`;
 
 type Props = {
   username?: string;
-  // allTiles: any;
   moods: Mood[];
   userId: number;
+  tiles: Tile[];
 };
 
 type Mood = {
@@ -34,7 +54,7 @@ export default function Tiles(props: Props) {
   const [errors, setErrors] = useState<any[]>();
   const [day, setDay] = useState('');
   const router = useRouter();
-
+  console.log(props);
   return (
     <Layout username={props.username}>
       <div>
@@ -76,20 +96,19 @@ export default function Tiles(props: Props) {
                       }),
                     });
 
-                    const responseJson = await response.json();
-                    console.log(responseJson);
+                    const tileResponseJson = await response.json();
+                    console.log(tileResponseJson);
 
                     // Check if there is an errorMessage inside the json and update state
-                    if ('errors' in responseJson) {
-                      // console.log('error in create.tsx', errorMessage);
-                      setErrors(responseJson.errors);
+                    if ('errors' in tileResponseJson) {
+                      setErrors(tileResponseJson.errors);
                       return;
                     }
                     router.reload();
-                    // router.push(`/dashboard`);
                   }}
                 >
                   <p>Select </p>
+
                   <Input
                     className="calendar-modal"
                     type="date"
@@ -111,50 +130,56 @@ export default function Tiles(props: Props) {
                       );
                     })}
                   </select>
-                  {/* <Input
-                      type="select"
-                      value={moodId}
-                      onChange={(event) => {
-                        setMoodId(event.currentTarget.value);
-                      }}
-                    >
-                      <option value="">Select Mood</option>
-
-                      {props.moods.map((mood) => {
-                        return (
-                          <option key={mood.id} value={mood.id}>
-                            {mood.title}
-                          </option>
-                        );
-                      })}
-                    </Input> */}
                   <p>What are some achievements you are aiming for today?</p>
                   <textarea
                     name="achievements"
-                    // value={achievements}
                     placeholder="What are some achievements you are aiming for"
                     max-length="10000"
                   />
-
-                  {/* <ReactQuill
-                      className="quill"
-                      name="achievements"
-                      value={achievements}
-                      placeholder="* today I have achieved ..."
-                      onChange={setAchievements}
-                    /> */}
                   <p>What are you grateful for today?</p>
                   <textarea
                     name="gratitude"
-                    // value={achievements}
                     placeholder="What are your grateful for"
                     max-length="10000"
                   />
-
                   <button>Create entry</button>
                 </form>
               </div>
-            </div>{' '}
+              {/* <div>
+                YOUR TILES
+                {props.tiles.map((tile) => (
+                  <div key={tile.id}>
+                    Achievements: {tile.achievements}
+                    <p />
+                    Gratitude: {tile.gratitude}
+                    <p />
+                    Mood: {tile.moodId}
+                    <p />
+                    Day: {tile.day}
+                  </div>
+                ))}
+              </div> */}
+              <div>
+                <h3>Your Tiles</h3>
+              </div>
+              <div css={tileGrid}>
+                {props.tiles.map((tile) => {
+                  return (
+                    <div key={`tile-li-${tile.id}`} css={singleTileContainer}>
+                      <div>
+                        <Link href={`/dashboard/${tile.id}`}>
+                          <a>Date: {tile.day}</a>
+                        </Link>
+                        Achievements: {tile.achievements}
+                        <p />
+                        Grateful for: {tile.gratitude}
+                        <p />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -165,23 +190,11 @@ export default function Tiles(props: Props) {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getValidSessionByToken } = await import('../../util/database');
 
-  if (
-    context.req.headers.host &&
-    context.req.headers['x-forwarded-proto'] &&
-    context.req.headers['x-forwarded-proto'] !== 'https'
-  ) {
-    return {
-      redirect: {
-        destination: `https://${context.req.headers.host}/dashboard`,
-        permanent: true,
-      },
-    };
-  }
-
   // Authorization: Allow only logged-in users
   const isValidSession = await getValidSessionByToken(
     context.req.cookies.sessionToken,
   );
+  const sessionToken = context.req.cookies.sessionToken;
 
   if (!isValidSession) {
     return {
@@ -191,29 +204,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
-
-  // const response = await fetch(`${process.env.API_BASE_URL}/dashboard`, {
-  //   method: 'GET',
-  //   headers: {
-  //     cookie: context.req.headers.cookie || '',
-  //   },
-  // });
-
-  // Wait for the response of the fetch inside /dashboard/index.ts and then transform it into json
-
-  // ERROR: receiving it as text instead of json because it comes back in non-json format...
-  // const json = await response.json();
+  const baseUrl = process.env.BASE_URL;
+  const tileResponse = await fetch(`${baseUrl}/api/dashboard/`, {
+    method: 'GET',
+    headers: {
+      cookie: `sessionToken=${sessionToken}`,
+    },
+    credentials: 'include',
+  });
+  const tiles = await tileResponse.json();
   const moods = await getMood();
-  // console.log(moods);
+
   return {
-    props: { moods, userId: isValidSession.userId },
+    props: { moods, userId: isValidSession.userId, tiles },
   };
 }
-
-// const profileResponse = await fetch(`${baseUrl}/api/user/${validSession.userId}`);
-//   const profileInfo = await profileResponse.json();
-
-// const profileResponse = await fetch(`${baseUrl}/api/user/${allowedUser.id}`);
-//   const profileInfo = await profileResponse.json();
-
-// const profileInfo = await getProfileInfoByUserId(Number(req.query.user));

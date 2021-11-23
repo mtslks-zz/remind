@@ -1,38 +1,22 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  getAllTiles,
-  getTilesByValidSessionUser,
-  getValidSessionByToken,
-} from '../../../util/database';
+import { getAllTiles, getValidSessionByToken } from '../../../util/database';
 
-export default async function singleTileHandler(
+export default async function TileHandler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const allTiles = await getAllTiles();
+  if (req.method === 'GET') {
+    console.log('cookies', req.cookies);
+    const validSession = await getValidSessionByToken(req.cookies.sessionToken);
 
-  const validSession = await getValidSessionByToken(req.cookies.sessionToken);
-  console.log('req.cookies', req.cookies.sessionToken);
-  console.log('validSession', validSession);
-  const isSessionValid = validSession ? true : false;
-  console.log('isSessionValid', isSessionValid);
+    if (validSession) {
+      const tiles = await getAllTiles(validSession.userId);
+      console.log('here are the tiles', tiles);
 
-  let allTilesByValidSessionUser;
-
-  // Check if valid session is defined
-  if (validSession) {
-    // Retrieve tiles of valid session user
-    allTilesByValidSessionUser = await getTilesByValidSessionUser(
-      validSession.userId,
-    );
-  } else {
-    return res.status(404).json({ errors: [{ message: 'No valid session.' }] });
+      // Once the tiles are retrieved, return them
+      return res.status(200).json(tiles);
+    }
+    return res.status(401);
   }
-
-  // Once the tiles are retrieved, return them
-  return res.status(200).json({
-    allTiles: allTiles,
-    isSessionValid: isSessionValid,
-    allTilesByValidSessionUser: allTilesByValidSessionUser,
-  });
+  return res.status(405);
 }

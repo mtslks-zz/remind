@@ -276,19 +276,7 @@ export async function insertFiveMinuteSessionWithoutUserId(token) {
   return sessions.map((session) => camelcaseKeys(session))[0];
 }
 
-// Inserting details into tiles table
-export async function createTile(userId, moodId, achievements, gratitude) {
-  const tiles = await sql`
-    INSERT INTO tiles
-      (user_id, mood_id, achievements, gratitude)
-    VALUES
-      (${userId},  ${moodId}, ${achievements}, ${gratitude})
-    RETURNING
-    user_id, mood_id, achievements, gratitude
-  `;
-  return tiles.map((tile) => camelcaseKeys(tile))[0];
-}
-
+// Inserting details into a tile
 export async function insertTile({
   userId,
   day,
@@ -333,18 +321,35 @@ export async function getMoodById(moodId) {
   return moods.map((mood) => camelcaseKeys(mood))[0];
 }
 
-export async function getAllTiles(token) {
+export async function getAllTiles(userId) {
   const allTiles = await sql`
     SELECT
-     tiles.*
+     *
     FROM
-     tiles,
-     sessions
+     tiles
     WHERE
-     sessions.token = ${token} AND
-     sessions.user_id = tiles.user_id
+    user_id = ${userId}
     `;
   return allTiles.map((s) => camelcaseKeys(s));
+}
+
+export async function getSingleTile(id) {
+  const singleTile = await sql`
+    SELECT
+      tiles.id,
+      tiles.user_id,
+      tiles.day,
+      tiles.achievements,
+      tiles.gratitude,
+      tiles.mood_id
+     FROM
+      tiles,
+      sessions
+     WHERE
+      tiles.id = ${id} AND
+      sessions.user_id = tiles.user_id
+  `;
+  return camelcaseKeys(singleTile[0]);
 }
 
 export async function getTilesByValidSessionUser(validSessionUserId) {
@@ -352,17 +357,9 @@ export async function getTilesByValidSessionUser(validSessionUserId) {
 
   const allTilesByValidSessionUser = await sql`
   SELECT
-    tiles.id,
-    tiles.user_id,
-    tiles.day,
-    tiles.mood_id,
-    tiles.achievements,
-    tiles.gratitude
+    *
     FROM
-      tiles,
-      achievements,
-      gratitude,
-      mood
+      tiles
     WHERE
       tiles.user_id = ${validSessionUserId}
     ORDER by
@@ -403,9 +400,8 @@ export async function getTileByTileId(tileId) {
 }
 
 export async function getTilesByUserId(userId) {
-  // // Return undefined if the id is not
-  // // in the correct format
-  if (!/^\d+$/.test(userId.toString())) return [];
+  // // Return undefined if the id is not correct
+  if (!userId) return undefined;
 
   const tiles = await sql`
     SELECT
@@ -416,21 +412,4 @@ export async function getTilesByUserId(userId) {
      user_id = ${userId};
   `;
   return tiles.map((tile) => camelcaseKeys(tile));
-}
-
-export async function getEmailByTileId(tileId) {
-  if (!tileId) return undefined;
-
-  const tiles = await sql`
-    SELECT
-      tiles.id,
-      tiles.day,
-      users.email
-    FROM
-      tiles,
-      users
-    WHERE
-      tiles.id = ${tileId}
-  `;
-  return tiles.map((tile) => camelcaseKeys(tile))[0];
 }
