@@ -6,6 +6,7 @@ import { pageContainer } from '../styles/styles';
 
 type Props = {
   username?: string;
+  firstName?: string;
 };
 
 const contentContainer = css`
@@ -57,7 +58,9 @@ export default function RegistrationSuccessful(props: Props) {
         <h2>Welcome! </h2>
         <div css={contentContainer}>
           <div css={containerLeft}>
-            <h3>You’ve successfully created your account, {props.username}!</h3>
+            <h3>
+              You’ve successfully created your account, {props.firstName}!
+            </h3>
 
             <Link href="/dashboard">
               <a className="button-general"> Go to dashboard</a>

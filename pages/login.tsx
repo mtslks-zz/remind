@@ -15,6 +15,24 @@ type Props = {
   username?: string;
 };
 
+const loginButton = css`
+  padding: 6px 24px;
+  background-color: #b2dfee;
+  border-radius: 20px;
+  cursor: pointer;
+  width: fill;
+  :hover {
+    background-color: #9ac0cd;
+  }
+
+  @media (max-width: 1125px) {
+    width: 140px;
+    margin: 12px;
+    text-align: center;
+    padding: 6px 12px;
+  }
+`;
+
 const formContainer = css`
   display: flex;
   box-shadow: 0 7px 17px rgb(0 0 0 / 13%);
@@ -23,9 +41,8 @@ const formContainer = css`
   align-items: center;
   margin-top: 10px;
   width: 25vw;
-  //background-color: orange;
-  border-radius: 8px;
-  border: 1px solid black;
+  border-radius: 12px;
+  border: none;
   padding: 5px;
   height: 95%;
 `;
@@ -86,7 +103,7 @@ export default function Login(props: Props) {
                   props.refreshUsername();
 
                   // Navigate to the user's page when account has been successfully created
-                  router.push(`/users/${json.user.username}`);
+                  router.push(`/dashboard`);
                 }}
               >
                 <div>
@@ -117,7 +134,7 @@ export default function Login(props: Props) {
                   </label>
                   <div css={errorMessage}>{error}</div>
                 </div>
-                <button className="button-general">Login</button>
+                <button css={loginButton}>Login</button>
               </form>
               <br />
               <div css={newAccountStyle}>

@@ -100,12 +100,15 @@ export const imageContainer = css`
 export const footerStyle = css`
   width: 100%;
   height: 62px;
-  background: rgb(0, 18, 36);
+  background-color: #0093e9;
+  background-image: linear-gradient(90deg, #0093e9 0%, #80d0c7 100%);
+
+  /* background: rgb(0, 18, 36);
   background: linear-gradient(
     90deg,
     rgba(0, 18, 36, 1) 0%,
-    rgba(0, 69, 255, 0.6755077030812324) 49%
-  );
+    rgba(0, 69, 255, 0.6755077030812324) 49% */
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -173,11 +176,14 @@ export const headerStyle = css`
   font-size: 1.2rem;
   letter-spacing: 3px;
   justify-content: space-between;
-  background: rgb(0, 18, 36);
+  background-color: #0093E9;
+background-image: linear-gradient(90deg, #0093E9 0%, #80D0C7 100%);
+
+  /* background: rgb(0, 18, 36);
   background: linear-gradient(
     90deg,
     rgba(0, 18, 36, 1) 0%,
-    rgba(0, 69, 255, 0.6755077030812324) 49%
+    rgba(0, 69, 255, 0.6755077030812324) 49% */
   );
   /* background: linear-gradient(
     91.4deg,
@@ -224,7 +230,7 @@ export const logoContainer = css`
 export const logoStyle = css`
   display: flex;
   align-items: center;
-  padding-bottom: 20px;
+  padding-top: 10px;
   img {
     width: 150px;
   }
@@ -271,6 +277,7 @@ export const navContainer = (open) => css`
     display: flex;
     align-items: center;
     justify-content: center;
+    text-transform: uppercase;
   }
 
   .button-general {
@@ -292,7 +299,11 @@ export const navContainer = (open) => css`
 
   .button-special {
     padding: 6px 24px;
-    background-color: #b2dfee;
+    background: linear-gradient(
+      135deg,
+      rgba($left-color, 0.9),
+      rgba($right-color, 0.9)
+    );
     border-radius: 20px;
     cursor: pointer;
     width: fill;
@@ -361,9 +372,9 @@ export const heroSectionHeading = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 40%;
   height: 100%;
-  padding: 0px 32px 64px;
+  padding: 32px 32px 64px;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -422,6 +433,10 @@ export const headingStyle = css`
     @media (max-width: 768px) {
       text-align: left;
     }
+  }
+  textarea {
+    width: 500px;
+    height: 200px;
   }
 `;
 

@@ -5,8 +5,6 @@ import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import { Errors, Mood, Tile } from '../../util/types';
 
-// import { getTileByTileId, getUserBySessionToken } from '../../util/database';
-
 export const singleTileContainer = css`
   width: 50vw;
 
@@ -28,9 +26,10 @@ const singleTileStyle = css`
 `;
 type Props = {
   username?: string;
-  moods: Mood[];
-  tiles: Tile[];
+  moods: Mood;
+  tiles: Tile;
   errors: Errors[];
+  day: string;
 };
 
 export default function SingleTile(props: Props) {

@@ -4,7 +4,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { Input } from 'reactstrap';
 import { AllTiles } from '../../components/AllTiles';
 import Layout from '../../components/Layout';
 import {
@@ -17,18 +16,17 @@ import { getMood } from '../../util/database';
 import { Tile } from '../../util/types';
 
 const singleTileContainer = css`
-  background-color: #ecf6ff;
+  background-image: linear-gradient(180deg, #6eb9e4 0%, #abd3cf 100%);
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
   padding: 20px;
 `;
 
 const tileGrid = css`
-  display: flex;
-  align-items: center;
-
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  grid-gap: 1.3rem;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
   a {
     display: block;
     text-align: center;
@@ -39,6 +37,7 @@ const tileGrid = css`
 
 type Props = {
   username?: string;
+  firstName?: string;
   moods: Mood[];
   userId: number;
   tiles: Tile[];
@@ -53,7 +52,7 @@ export default function Tiles(props: Props) {
   const [errors, setErrors] = useState<any[]>();
   const [day, setDay] = useState('');
   const router = useRouter();
-  console.log(props);
+  // console.log(props);
   return (
     <Layout username={props.username}>
       <div>
@@ -65,15 +64,13 @@ export default function Tiles(props: Props) {
 
         <div css={heroSection}>
           <div css={heroSectionHeadingImageContainer}>
-            <div css={heroSectionHeading}>
+            <div>
               <div css={headingStyle}>
                 <h2 className="header1-text">
-                  Welcome to your Dashboard, {props.username}
+                  Welcome to your Dashboard, {props.firstName}
                 </h2>
 
-                <p>
-                  <h3>Create new entry for {day}</h3>
-                </p>
+                <h2>Create a new entry below:</h2>
 
                 <form
                   onSubmit={async (event) => {
@@ -106,19 +103,28 @@ export default function Tiles(props: Props) {
                     router.reload();
                   }}
                 >
-                  <p>Select </p>
-
-                  <Input
-                    className="calendar-modal"
+                  <div>
+                    <label htmlFor="date-picker">
+                      <h2>Select date for entry</h2>
+                    </label>
+                  </div>
+                  <input
                     type="date"
-                    placeholder="dd/mm/yyyy"
+                    placeholder="30/11/2021"
                     value={day}
+                    min="2021-11-01"
+                    max="2022-12-31"
                     required
                     onChange={(event) => {
                       setDay(event.currentTarget.value);
                     }}
                   />
-                  <p>How do you feel today?</p>
+
+                  <div>
+                    <label htmlFor="gratitude">
+                      <h2>Set your mood for the day</h2>
+                    </label>
+                  </div>
                   <select id="mood" name="mood">
                     <option value="">Select Mood</option>
                     {props.moods.map((mood) => {
@@ -129,50 +135,97 @@ export default function Tiles(props: Props) {
                       );
                     })}
                   </select>
-                  <p>What are some achievements you are aiming for today?</p>
-                  <textarea
-                    name="achievements"
-                    placeholder="What are some achievements you are aiming for"
-                    max-length="10000"
-                  />
-                  <p>What are you grateful for today?</p>
-                  <textarea
-                    name="gratitude"
-                    placeholder="What are your grateful for"
-                    max-length="10000"
-                  />
-                  <button>Create entry</button>
+                  <div>
+                    <label htmlFor="achievements">
+                      <h2>What are you aiming to achieve today?</h2>
+                    </label>
+                  </div>
+                  <div>
+                    <textarea
+                      name="achievements"
+                      placeholder="What are you aiming to achieve today?"
+                      max-length="10000"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="gratitude">
+                      <h2>What are you grateful for today?</h2>
+                    </label>
+                  </div>
+                  <div>
+                    <textarea
+                      name="gratitude"
+                      placeholder="What are your grateful for"
+                      max-length="10000"
+                    />
+                  </div>
+                  <div>
+                    <button className="button-general">
+                      Create daily entry
+                    </button>
+                  </div>
                 </form>
               </div>
-              {/* <div>
-                YOUR TILES
-                {props.tiles.map((tile) => (
-                  <div key={tile.id}>
-                    Achievements: {tile.achievements}
-                    <p />
-                    Gratitude: {tile.gratitude}
-                    <p />
-                    Mood: {tile.moodId}
-                    <p />
-                    Day: {tile.day}
-                  </div>
-                ))}
-              </div> */}
               <div>
-                <h3>Your Tiles</h3>
+                <h2>Your Tile Overview</h2>
               </div>
+              <button>Filter</button>
               <div css={tileGrid}>
                 {props.tiles.map((tile) => {
                   return (
                     <div key={`tile-li-${tile.id}`} css={singleTileContainer}>
                       <div>
-                        <Link href={`/dashboard/${tile.id}`}>
-                          <a>Date: {tile.day}</a>
+                        <Link passHref href={`/dashboard/${tile.id}`}>
+                          <h2>
+                            <a>{tile.day}</a>
+                          </h2>
                         </Link>
                         Achievements: {tile.achievements}
                         <p />
                         Grateful for: {tile.gratitude}
                         <p />
+                      </div>
+                      <div>
+                        {/* TO-DO Delete tile functionality */}
+                        <button
+                          className="button-general"
+                          onClick={async (event) => {
+                            event.preventDefault();
+                            if (
+                              !window.confirm(
+                                `Are you sure you want to delete this tile? This cannot be reversed!`,
+                              )
+                            ) {
+                              return;
+                            }
+
+                            const response = await fetch(
+                              `/api/dashboard/${tile.id}`,
+                              {
+                                method: 'DELETE',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  day: day,
+                                  userId: props.userId,
+                                  moodId: moodId,
+                                  achievements: achievements,
+                                  gratitude: gratitude,
+                                }),
+                              },
+                            );
+
+                            await response.json();
+
+                            // Reload page after tile has been deleted
+                            router.reload();
+                          }}
+                        >
+                          Delete
+                        </button>
+                        <button>Edit</button>
+                        <button>Forward by Email</button>
                       </div>
                     </div>
                   );
