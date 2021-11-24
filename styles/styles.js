@@ -122,9 +122,8 @@ export const inputFormStyle = css`
   flex-direction: column;
   justify-content: center;
   align-items: left;
-  width: 40vh;
-  padding: 20px 48px 35px 20px;
-  margin-right: 32px;
+  width: 50vh;
+  padding: 10px 48px 35px 20px;
 
   label {
     display: flex;
@@ -135,7 +134,7 @@ export const inputFormStyle = css`
 
     input {
       margin: 6px 0 20px 0;
-      width: 200px;
+      width: 225px;
       padding: 12px 8px;
       transition: 0.3s ease-in-out;
 
@@ -152,7 +151,7 @@ export const inputFormStyle = css`
 
 export const imageContainer = css`
   width: 50%;
-  padding-top: 64px;
+  padding-top: 12px;
 
   @media (max-width: 450px) {
     padding-top: 32px;

@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '../components/Layout';
-import { pageContainer } from '../styles/styles';
+import { buttonStylesStandard, pageContainer } from '../styles/styles';
 
 type Props = {
   username?: string;
@@ -52,21 +52,20 @@ export default function RegistrationSuccessful(props: Props) {
   return (
     <Layout username={props.username}>
       <Head>
-        <title>(re)mind Registration Successful</title>
+        <title>(re)mind | Registration Successful</title>
       </Head>
       <div css={pageContainer}>
-        <h2>Welcome! </h2>
         <div css={contentContainer}>
           <div css={containerLeft}>
-            <h3>
-              You’ve successfully created your account, {props.firstName}!
+            <h3 className="header1-text">
+              Congratulations, your account has been created.
             </h3>
 
             <Link href="/dashboard">
-              <a className="button-general"> Go to dashboard</a>
+              <a css={buttonStylesStandard}>Go to dashboard now</a>
             </Link>
-            <Link href="/dashboard">
-              <a className="button-general">Create first entry</a>
+            <Link href={`/users/${props.username}`}>
+              <a css={buttonStylesStandard}>My Profile</a>
             </Link>
           </div>
         </div>

@@ -121,7 +121,7 @@ export default function Tiles(props: Props) {
         <div css={pageContainer}>
           <div css={heroSectionHeadingImageContainer}>
             <div css={heroSectionHeading}>
-              <div css={headingStyle}>
+              <div css={heroSectionHeading}>
                 <h2 className="header1-text">Dashboard</h2>
                 <form
                   css={tileFormStyle}

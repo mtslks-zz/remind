@@ -6,7 +6,14 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 // import Header from '../components/Header';
 import Layout from '../components/Layout';
-import { inputFormStyle, wrapper } from '../styles/styles';
+import {
+  buttonStylesStandard,
+  heroSectionHeading,
+  heroSectionHeadingImageContainer,
+  heroSectionImage,
+  inputFormStyle,
+  pageContainer,
+} from '../styles/styles';
 import { getValidSessionByToken } from '../util/database';
 import { LoginResponse } from './api/login';
 
@@ -15,52 +22,8 @@ type Props = {
   username?: string;
 };
 
-const loginButton = css`
-  .button {
-    padding: 6px 24px;
-    background: linear-gradient(
-      135deg,
-      rgba($left-color, 0.9),
-      rgba($right-color, 0.9)
-    );
-    border-radius: 20px;
-    cursor: pointer;
-    width: fill;
-    :hover {
-      background-color: #9ac0cd;
-    }
-
-  @media (max-width: 1125px) {
-    width: 140px;
-    margin: 12px;
-    text-align: center;
-    padding: 6px 12px;
-  }
-`;
-
-/* const formContainer = css`
-  display: flex;
-  box-shadow: 0 7px 17px rgb(0 0 0 / 13%);
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  width: 25vw;
-  border-radius: 12px;
-  border: none;
-  padding: 30px;
-  height: 100%;
-
-  @media (max-width: 1125px) {
-    width: 140px;
-    margin: 12px;
-    text-align: center;
-    padding: 6px 12px;
-  }
-`; */
-
 const newAccountStyle = css`
+  color: #35819d;
   text-align: center;
   .span {
     font-size: 8px;
@@ -80,12 +43,12 @@ export default function Login(props: Props) {
 
   return (
     <Layout username={props.username}>
-      <>
-        <Head>
-          <title>(re)mind Login</title>
-        </Head>
-        <div>
-          <div css={wrapper}>
+      <Head>
+        <title>(re)mind Login</title>
+      </Head>
+      <section css={pageContainer}>
+        <div css={heroSectionHeadingImageContainer}>
+          <div css={heroSectionHeading}>
             <div css={inputFormStyle}>
               <h2>Login to (re)mind</h2>
 
@@ -146,7 +109,7 @@ export default function Login(props: Props) {
                   </label>
                   <div css={errorMessage}>{error}</div>
                 </div>{' '}
-                <button css={loginButton}>Login</button>
+                <button css={buttonStylesStandard}>Login</button>
               </form>
 
               <br />
@@ -154,14 +117,20 @@ export default function Login(props: Props) {
                 {' '}
                 <Link href="/register">
                   <a>
-                    <span>...or create a new account</span>
+                    <span>...or create a new account here</span>
                   </a>
                 </Link>
               </div>
             </div>
           </div>
+          <div css={heroSectionImage}>
+            <img
+              src="./images/A-Human/register_flower.svg"
+              alt="Plant in a vase"
+            />
+          </div>
         </div>
-      </>
+      </section>
     </Layout>
   );
 }

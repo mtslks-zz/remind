@@ -7,6 +7,9 @@ import Layout from '../components/Layout';
 import {
   buttonContainer,
   buttonStylesStandard,
+  heroSectionHeading,
+  heroSectionHeadingImageContainer,
+  heroSectionImage,
   imageContainer,
   inputFormStyle,
   pageContainer,
@@ -35,131 +38,134 @@ export default function Registration(props: Props) {
       <Head>
         <title>(re)mind Registration</title>
       </Head>
-      <div>
-        <div css={wrapper}>
-          <div css={inputFormStyle}>
-            <h2>Register now...</h2>
-            <h3>Enter your details to start tracking...</h3>
+      <section css={pageContainer}>
+        <div css={heroSectionHeadingImageContainer}>
+          <div css={heroSectionHeading}>
+            <div css={inputFormStyle}>
+              <h2>New (re)mind Account</h2>
+              <p>
+                <strong>Please register below:</strong>
+              </p>
+              <form
+                onSubmit={async (event) => {
+                  event.preventDefault();
+                  const response = await fetch(`/api/register`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      firstName: firstName,
+                      lastName: lastName,
+                      username: username,
+                      password: password,
+                      email: email,
+                      csrfToken: props.csrfToken,
+                    }),
+                  });
+                  const registerJson =
+                    (await response.json()) as RegisterResponse;
 
-            <form
-              onSubmit={async (event) => {
-                event.preventDefault();
-                const response = await fetch(`/api/register`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    firstName: firstName,
-                    lastName: lastName,
-                    username: username,
-                    password: password,
-                    email: email,
-                    csrfToken: props.csrfToken,
-                  }),
-                });
-                const registerJson =
-                  (await response.json()) as RegisterResponse;
+                  if ('errors' in registerJson) {
+                    setError(registerJson.errors[0].message);
+                    return;
+                  }
 
-                if ('errors' in registerJson) {
-                  setError(registerJson.errors[0].message);
-                  return;
-                }
+                  props.refreshUsername();
 
-                props.refreshUsername();
-
-                // Navigate to success page after registration
-                router.push(`/register-success`);
-              }}
-            >
-              <div>
-                <label>
-                  Username
-                  <input
-                    value={username}
-                    placeholder=""
-                    onChange={(event) => {
-                      setUsername(event.currentTarget.value);
-                    }}
-                  />
-                </label>
-              </div>
-
-              <div>
-                <label>
-                  Password
-                  <input
-                    value={password}
-                    placeholder="min. 8 characters"
-                    type="password"
-                    minLength={8}
-                    required
-                    onChange={(event) => {
-                      setPassword(event.currentTarget.value);
-                    }}
-                  />
-                </label>
-              </div>
-              <div>
-                <label>
-                  Email
-                  <input
-                    value={email}
-                    type="email"
-                    required
-                    placeholder=""
-                    onChange={(event) => {
-                      setEmail(event.currentTarget.value);
-                    }}
-                  />
-                </label>
-              </div>
-              <div>
-                <label>
-                  First Name (optional)
-                  <input
-                    value={firstName}
-                    placeholder=""
-                    onChange={(event) => {
-                      setFirstName(event.currentTarget.value);
-                    }}
-                  />
-                </label>
-              </div>
-
-              <div>
-                <label>
-                  Last Name (optional)
-                  <input
-                    value={lastName}
-                    placeholder=""
-                    onChange={(event) => {
-                      setLastName(event.currentTarget.value);
-                    }}
-                  />
-                </label>
-              </div>
-
-              <div
-                style={{
-                  color: 'red',
-                  fontStyle: 'italic',
-                  paddingBottom: '12px',
+                  // Navigate to success page after registration
+                  router.push(`/register-success`);
                 }}
               >
-                {error}
-              </div>
-              <button css={buttonStylesStandard}>Sign Up</button>
-            </form>
+                <div>
+                  <label>
+                    Username
+                    <input
+                      value={username}
+                      placeholder=""
+                      onChange={(event) => {
+                        setUsername(event.currentTarget.value);
+                      }}
+                    />
+                  </label>
+                </div>
+
+                <div>
+                  <label>
+                    Password
+                    <input
+                      value={password}
+                      placeholder="min. 8 characters"
+                      type="password"
+                      minLength={8}
+                      required
+                      onChange={(event) => {
+                        setPassword(event.currentTarget.value);
+                      }}
+                    />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    Email
+                    <input
+                      value={email}
+                      type="email"
+                      required
+                      placeholder=""
+                      onChange={(event) => {
+                        setEmail(event.currentTarget.value);
+                      }}
+                    />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    First Name (optional)
+                    <input
+                      value={firstName}
+                      placeholder=""
+                      onChange={(event) => {
+                        setFirstName(event.currentTarget.value);
+                      }}
+                    />
+                  </label>
+                </div>
+
+                <div>
+                  <label>
+                    Last Name (optional)
+                    <input
+                      value={lastName}
+                      placeholder=""
+                      onChange={(event) => {
+                        setLastName(event.currentTarget.value);
+                      }}
+                    />
+                  </label>
+                </div>
+
+                <div
+                  style={{
+                    color: 'red',
+                    fontStyle: 'italic',
+                    paddingBottom: '12px',
+                  }}
+                >
+                  {error}
+                </div>
+                <button css={buttonStylesStandard}>Sign Up</button>
+              </form>
+            </div>
           </div>
-          <div css={imageContainer}>
+          <div css={heroSectionImage}>
             <img
               src="./images/A-Human/register_flower.svg"
               alt="Plant in a vase"
             />
           </div>
         </div>
-      </div>
+      </section>
     </Layout>
   );
 }
