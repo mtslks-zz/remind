@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Layout from '../components/Layout';
 import {
   buttonContainer,
+  buttonStylesStandard,
   imageContainer,
   inputFormStyle,
   pageContainer,
@@ -34,7 +35,7 @@ export default function Registration(props: Props) {
       <Head>
         <title>(re)mind Registration</title>
       </Head>
-      <div css={pageContainer}>
+      <div>
         <div css={wrapper}>
           <div css={inputFormStyle}>
             <h2>Register now...</h2>
@@ -148,9 +149,7 @@ export default function Registration(props: Props) {
               >
                 {error}
               </div>
-              <div css={buttonContainer}>
-                <button className="button-general">Sign up</button>
-              </div>
+              <button css={buttonStylesStandard}>Sign Up</button>
             </form>
           </div>
           <div css={imageContainer}>

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 // import Header from '../components/Header';
 import Layout from '../components/Layout';
-import { inputFormStyle, pageContainer, wrapper } from '../styles/styles';
+import { inputFormStyle, wrapper } from '../styles/styles';
 import { getValidSessionByToken } from '../util/database';
 import { LoginResponse } from './api/login';
 
@@ -16,14 +16,19 @@ type Props = {
 };
 
 const loginButton = css`
-  padding: 6px 24px;
-  background-color: #b2dfee;
-  border-radius: 20px;
-  cursor: pointer;
-  width: fill;
-  :hover {
-    background-color: #9ac0cd;
-  }
+  .button {
+    padding: 6px 24px;
+    background: linear-gradient(
+      135deg,
+      rgba($left-color, 0.9),
+      rgba($right-color, 0.9)
+    );
+    border-radius: 20px;
+    cursor: pointer;
+    width: fill;
+    :hover {
+      background-color: #9ac0cd;
+    }
 
   @media (max-width: 1125px) {
     width: 140px;
@@ -33,19 +38,27 @@ const loginButton = css`
   }
 `;
 
-const formContainer = css`
+/* const formContainer = css`
   display: flex;
   box-shadow: 0 7px 17px rgb(0 0 0 / 13%);
   justify-content: center;
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
+  margin-bottom: 20px;
   width: 25vw;
   border-radius: 12px;
   border: none;
-  padding: 5px;
-  height: 95%;
-`;
+  padding: 30px;
+  height: 100%;
+
+  @media (max-width: 1125px) {
+    width: 140px;
+    margin: 12px;
+    text-align: center;
+    padding: 6px 12px;
+  }
+`; */
 
 const newAccountStyle = css`
   text-align: center;
@@ -71,11 +84,10 @@ export default function Login(props: Props) {
         <Head>
           <title>(re)mind Login</title>
         </Head>
-        <div css={pageContainer}>
+        <div>
           <div css={wrapper}>
-            <div css={formContainer}>
-              <h2>Welcome back!</h2>
-              <h3>Login to start tracking</h3>
+            <div css={inputFormStyle}>
+              <h2>Login to (re)mind</h2>
 
               <form
                 onSubmit={async (event) => {
@@ -108,34 +120,35 @@ export default function Login(props: Props) {
               >
                 <div>
                   <label>
-                    Username:
+                    Username:{' '}
                     <input
                       value={username}
-                      placeholder="Enter your (re)mind username"
+                      placeholder=""
                       onChange={(event) => {
                         setUsername(event.currentTarget.value);
                       }}
                     />
                   </label>
                 </div>
-
+                <div> </div>
                 <div>
                   <label>
-                    Password:
+                    Password:{' '}
                     <input
                       value={password}
                       type="password"
                       required
-                      placeholder="Enter your password"
+                      placeholder=""
                       onChange={(event) => {
                         setPassword(event.currentTarget.value);
                       }}
                     />
                   </label>
                   <div css={errorMessage}>{error}</div>
-                </div>
+                </div>{' '}
                 <button css={loginButton}>Login</button>
               </form>
+
               <br />
               <div css={newAccountStyle}>
                 {' '}

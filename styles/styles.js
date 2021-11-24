@@ -31,8 +31,9 @@ const containerRight = css`
 export const wrapper = css`
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding-top: 64px;
+  justify-items: flex;
+  padding-top: 128px;
+  padding-bottom: 128px;
 
   @media (max-width: 450px) {
     flex-direction: column-reverse;
@@ -40,13 +41,13 @@ export const wrapper = css`
   }
 `;
 
-export const inputFormStyle = css`
+export const tileFormStyle = css`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: left;
   align-items: left;
-  width: 35vh;
-  padding-bottom: 128px;
+  width: 25vh;
+  padding-bottom: 50px;
 
   label {
     display: flex;
@@ -72,27 +73,93 @@ export const inputFormStyle = css`
   }
 
   button {
-    display: flex;
-    font-size: 1rem;
-    font-weight: 800;
-    justify-content: center;
-    align-items: center;
-    width: 15vh;
-    border-radius: 20px;
+    padding: 6px 24px;
+    background: #6eb9e4;
+    border-radius: 10px;
     border: none;
+    cursor: pointer;
     text-transform: uppercase;
+    font-weight: 300;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: white;
+    width: 15vh;
+    height: 5vh;
+    :hover {
+      background-color: #9ac0cd;
+    }
+
+    @media (max-width: 1125px) {
+      width: 140px;
+      margin: 12px;
+      text-align: center;
+      padding: 6px 12px;
+    }
+  }
+`;
+
+export const buttonStylesStandard = css`
+  display: inline-block;
+  background-color: none;
+  font-size: 16px;
+  font-weight: 400;
+  border: 0.1rem solid grey;
+  border-radius: 16px;
+  padding: 12px 24px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 5px 0px;
+
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+export const inputFormStyle = css`
+  display: flex;
+  box-shadow: 0 7px 17px rgb(0 0 0 / 13%);
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  width: 40vh;
+  padding: 20px 48px 35px 20px;
+  margin-right: 32px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-weight: 300;
+    color: grey;
+
+    input {
+      margin: 6px 0 20px 0;
+      width: 200px;
+      padding: 12px 8px;
+      transition: 0.3s ease-in-out;
+
+      border: 1px solid;
+      border-radius: 8px;
+
+      :focus {
+        box-shadow: 0 0 2px black;
+        outline: none !important;
+      }
+    }
   }
 `;
 
 export const imageContainer = css`
   width: 50%;
+  padding-top: 64px;
 
   @media (max-width: 450px) {
     padding-top: 32px;
   }
 
   img {
-    width: 90%;
+    width: 400px;
   }
 `;
 
@@ -115,6 +182,9 @@ export const footerStyle = css`
   font-weight: 400;
   text-transform: uppercase;
   color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 
   @media (max-width: 450px) {
     display: none;
@@ -173,18 +243,18 @@ export const headerStyle = css`
   height: 85px;
   padding: 12px 90px;
   display: flex;
-  font-size: 1.2rem;
-  letter-spacing: 3px;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
   justify-content: space-between;
-  background-color: #0093E9;
-background-image: linear-gradient(90deg, #0093E9 0%, #80D0C7 100%);
+  background-color: #0093e9;
+  background-image: linear-gradient(90deg, #0093e9 0%, #80d0c7 100%);
 
   /* background: rgb(0, 18, 36);
   background: linear-gradient(
     90deg,
     rgba(0, 18, 36, 1) 0%,
     rgba(0, 69, 255, 0.6755077030812324) 49% */
-  );
+
   /* background: linear-gradient(
     91.4deg,
     #e4e4e4 0%,
@@ -205,6 +275,26 @@ background-image: linear-gradient(90deg, #0093E9 0%, #80D0C7 100%);
 
   @media (max-width: 768px) {
     padding: 32px 24px;
+  }
+  a {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 300;
+    text-decoration: none;
+
+    :hover {
+      font-weight: 300;
+      color: lightgrey;
+    }
+  }
+
+  li:last-child {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  li:hover ~ li p {
+    animation: wave-animation 0.3s infinite;
   }
 `;
 
@@ -230,9 +320,11 @@ export const logoContainer = css`
 export const logoStyle = css`
   display: flex;
   align-items: center;
-  padding-top: 10px;
+  color: white;
+  justify-content: center;
+  text-transform: uppercase;
   img {
-    width: 150px;
+    width: 200px;
   }
 `;
 
@@ -299,11 +391,11 @@ export const navContainer = (open) => css`
 
   .button-special {
     padding: 6px 24px;
-    background: linear-gradient(
+    /* background: linear-gradient(
       135deg,
       rgba($left-color, 0.9),
       rgba($right-color, 0.9)
-    );
+    ); */
     border-radius: 20px;
     cursor: pointer;
     width: fill;
@@ -331,7 +423,7 @@ export const navContainer = (open) => css`
     align-items: center;
 
     :hover {
-      font-weight: 800;
+      font-weight: 400;
     }
   }
 `;
@@ -355,7 +447,7 @@ export const heroSection = css`
 export const heroSectionHeadingImageContainer = css`
   display: flex;
   flex-direction: row;
-  padding: 0px 128px 0px 64px;
+  padding: 0px 64px 0px 64px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -363,7 +455,7 @@ export const heroSectionHeadingImageContainer = css`
   }
 
   @media (max-width: 450px) {
-    padding: 96px 24px;
+    padding: 12px 24px;
   }
 `;
 
@@ -372,9 +464,9 @@ export const heroSectionHeading = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 40%;
+  width: 65%;
   height: 100%;
-  padding: 32px 32px 64px;
+  padding: 0px 0px 64px;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -390,6 +482,7 @@ export const heroSectionHeading = css`
 export const headingStyle = css`
   display: flex;
   flex-direction: column;
+  width: 90%;
 
   @media (max-width: 1260px) {
     h1 {
@@ -437,12 +530,38 @@ export const headingStyle = css`
   textarea {
     width: 500px;
     height: 200px;
+    border: 1px solid #888;
+    resize: none;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    padding: 10px;
+    font-family: 'EB Garamond', serif;
+    max-width: 100%;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
   }
 `;
 
 export const buttonContainer = css`
   display: flex;
   flex-direction: row;
+
+  .a {
+    padding: 6px 12px;
+    background: linear-gradient(
+      135deg,
+      rgba($left-color, 0.9),
+      rgba($right-color, 0.9)
+    );
+    border-radius: 20px;
+    cursor: pointer;
+    width: fill;
+    :hover {
+      background-color: #9ac0cd;
+    }
+  }
 
   @media (max-width: 768px) {
     justify-content: center;
@@ -475,7 +594,6 @@ export const heroSectionImage = css`
   img {
     width: 100%;
     height: auto;
-
     @media (max-width: 768px) {
       width: 400px;
     }
@@ -487,40 +605,17 @@ export const heroSectionImage = css`
 `;
 
 // Tile Styles
-const tileContainer = css`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-`;
-
-const buttonsContainer = css`
-  margin-bottom: 64px;
-
-  button,
-  select {
-    margin-right: 32px;
-
-    @media (max-width: 450px) {
-      margin-bottom: 12px;
-      margin-right: 6px;
-    }
-  }
-`;
-
-const tilesContainer = css`
+export const tilesContainer = css`
   display: flex;
   flex-direction: column;
   background-color: white;
   border-radius: 16px;
-  border: 1px solid green;
-  box-shadow: 5px 5px 8px #a5cc8252;
-  width: 330px;
-  height: 470px;
-  margin: 0 32px 64px 32px;
-
-  :hover {
-    transform: translate(0, -10px);
-  }
+  border: 1px solid grey;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 5px 0px;
+  width: 100%;
+  height: 50vh;
+  margin: 16px 32px 64px 32px;
+  padding: 24px;
 
   @media (max-width: 768px) {
     margin: 0 18px 64px 18px;
@@ -539,50 +634,4 @@ const tilesContainer = css`
     padding: 6px;
     text-align: center;
   }
-`;
-
-const tileTopStyle = css`
-  background-color: green;
-  border-radius: 16px 16px 0 0;
-
-  a {
-    color: green;
-  }
-
-  h3 {
-    margin-bottom: 12px;
-  }
-`;
-
-const tileBottomStyle = css`
-  background-color: white;
-  border-radius: 0 0 16px 16px;
-  padding: 32px;
-
-  @media (max-width: 400px) {
-    padding: 18px;
-  }
-`;
-
-const userAndCategoryStyle = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 0 12px;
-  text-align: center;
-  font-size: 0.7rem;
-  margin-bottom: 16px;
-
-  .userInfo {
-    margin-right: 6px;
-  }
-
-  .resourceInfo {
-    padding-top: 6px;
-  }
-`;
-
-const publicNoteStyle = css`
-  margin-bottom: 16px;
 `;

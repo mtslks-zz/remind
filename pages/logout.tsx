@@ -26,7 +26,7 @@ export default function Logout(props: LogoutProps) {
         <title>Logged out successfully</title>
       </Head>
 
-      <div css={pageContainer}>
+      <div>
         <h2>You have successfully logged out.</h2>
         <h3>We hope to see you soon again!</h3>
       </div>

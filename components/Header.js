@@ -13,7 +13,7 @@ export default function Header(props) {
       <header css={headerStyle}>
         <div css={logoStyle}>
           <Link href="/">
-            <a className="header1-text">
+            <a>
               <img src="/images/logo.png" alt="remind logo" />
             </a>
           </Link>

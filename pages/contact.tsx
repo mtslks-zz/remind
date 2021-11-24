@@ -16,7 +16,7 @@ export default function Dashboard(props: Props) {
   return (
     <Layout username={props.username}>
       <Head>
-        <title>Contact Us</title>
+        <title>(re)mind | Contact Us</title>
         <meta name="description" content="Mindfulness Tracker by (re)mind" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

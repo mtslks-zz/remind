@@ -30,11 +30,11 @@ export default function HeaderNav(props: HeaderProps) {
             <li>Tutorial</li>
           </a>
         </Link>
-        <Link href="/contact">
+        {/* <Link href="/contact">
           <a>
             <li>Contact</li>
           </a>
-        </Link>
+        </Link> */}
         <li>
           {props.username && (
             <Link href={`/users/${props.username}`} passHref>

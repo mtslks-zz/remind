@@ -8,7 +8,7 @@ export default function Error(props) {
       <Head>
         <title>Page not found</title>
       </Head>
-      <div css={pageContainer}>
+      <div>
         <h2>Error 404 - not found</h2>
       </div>
     </Layout>

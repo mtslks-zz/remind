@@ -9,11 +9,11 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Layout from '../../components/Layout';
 import {
+  buttonContainer,
   headingStyle,
   heroSection,
   heroSectionHeading,
   heroSectionHeadingImageContainer,
-  pageContainer,
 } from '../../styles/styles';
 import { Errors, User } from '../../util/types';
 import { SingleUserResponseType } from '../api/users/[username]';
@@ -131,7 +131,7 @@ export default function UserProfile(props: Props) {
         <Head>
           <title>Access denied</title>
         </Head>
-        <div css={pageContainer}>
+        <div>
           <h2>{errors[0].message}</h2>
         </div>
       </Layout>
@@ -145,7 +145,7 @@ export default function UserProfile(props: Props) {
         <Head>
           <title>Unknown user</title>
         </Head>
-        <div css={pageContainer}>
+        <div>
           <h2>User could not be found</h2>
         </div>
       </Layout>
@@ -156,10 +156,9 @@ export default function UserProfile(props: Props) {
     <Layout username={props.username}>
       <Head>
         <title>
-          User profile {props.user.firstName} {props.user.lastName}
+          (re)mind | User {props.user.firstName} {props.user.lastName}
         </title>
       </Head>
-
       <div css={heroSection}>
         <div css={heroSectionHeadingImageContainer}>
           <div css={heroSectionHeading}>
@@ -203,6 +202,8 @@ export default function UserProfile(props: Props) {
                 Update avatar
               </button>
             </div> */}
+            </div>
+            <div css={buttonContainer}>
               <button
                 className="button-general"
                 onClick={async (event) => {

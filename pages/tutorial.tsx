@@ -1,6 +1,4 @@
 import Head from 'next/head';
-// import Link from 'next/link';
-// import Header from '../components/Header';
 import Layout from '../components/Layout';
 import {
   headingStyle,
@@ -17,7 +15,7 @@ export default function Tutorial(props: Props) {
   return (
     <Layout username={props.username}>
       <Head>
-        <title>About (re)mind</title>
+        <title>(re)mind | Tutorial</title>
         <meta name="description" content="Mindfulness Tracker by (re)mind" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

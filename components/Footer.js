@@ -12,12 +12,12 @@ export default function Footer() {
               <li>Home</li>
             </a>
           </Link>
-          <Link href="/tiles">
+          <Link href="/dashboard">
             <a>
-              <li>Dashboard</li>
+              <li>My Dashboard</li>
             </a>
           </Link>
-          <div>© (re)mind</div>
+          <div>Contact</div>
           {/* <div class="wrapper">
             <div class="icon facebook">
               <div class="tooltip">Facebook</div>
