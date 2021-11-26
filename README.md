@@ -19,10 +19,8 @@ This web application was created as the final project for the Upleveled bootcamp
 
 - User authentication (registration + login)
 - User authorization (only the owner of the items is allowed to create tiles and answer questions)
-- Users can create tiles and filter them in the grid overview
-- A user can edit and delete their entries
-- Users can filter by mood setting (first question)
-- The website is fully responsive, so access on the mobile phone is possible
+- Quote of the day tile
+- User can access the tiles on a single page
 
 ## Technologies
 
