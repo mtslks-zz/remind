@@ -6,7 +6,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate": "dotenv ley"
+    "migrate": "dotenv ley",
+    "heroku-postbuild": "yarn migrate up && yarn build"
   },
   "dependencies": {
     "@emotion/babel-plugin": "^11.3.0",
@@ -70,6 +71,5 @@
   },
   "cacheDirectories": [
     ".next/cache"
-  ],
-  "heroku-postbuild": "yarn migrate up && yarn build"
+  ]
 }
