@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Adamina&family=DM+Serif+Text&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora&family=Nunito:wght@400;600;700&display=swap');
 
 html {
   scroll-behavior: smooth;
@@ -18,11 +19,22 @@ a {
 }
 .header1-text {
   font-size: 2.5em;
-  font-family: 'DM Serif Text', serif;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
 }
+
+.lead-text  {
+  font-size: 1em;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  text-align: justify;
+  line-height: 2.2;
+}
+
 .paragraph-text {
   font-size: 1em;
-  font-family: 'Merriweather', serif;
+  font-family: 'Lora', serif;
+  font-weight: 400;
   text-align: justify;
   line-height: 2.2;
 }

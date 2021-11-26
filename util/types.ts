@@ -28,6 +28,7 @@ export type Tile = {
   moodId: number;
   achievements: string;
   gratitude: string;
+  affirmations: string;
   day: string;
 };
 

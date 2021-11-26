@@ -6,7 +6,8 @@ exports.up = async function up(sql) {
 			day varchar(40),
 			mood_id integer REFERENCES moods (id) ON DELETE CASCADE NOT NULL,
       achievements varchar(10000),
-      gratitude varchar(10000)
+      gratitude varchar(10000),
+      affirmations varchar(10000)
     )
   `;
 };

@@ -24,6 +24,7 @@ export default async function createTileHandler(
         moodId: req.body.moodId,
         achievements: req.body.achievements,
         gratitude: req.body.gratitude,
+        affirmations: req.body.affirmations,
       });
       if (!insertedTile) {
         res.status(404).send({

@@ -6,6 +6,21 @@ import postgres from 'postgres';
 
 // setPostgresDefaultsOnHeroku();
 
+module.exports = function setPostgresDefaultsOnHeroku() {
+  if (process.env.DATABASE_URL) {
+    const { parse } = require('pg-connection-string');
+
+    // Extract the connection information from the Heroku environment variable
+    const { host, database, user, password } = parse(process.env.DATABASE_URL);
+
+    // Set standard environment variables
+    process.env.PGHOST = host;
+    process.env.PGDATABASE = database;
+    process.env.PGUSERNAME = user;
+    process.env.PGPASSWORD = password;
+  }
+};
+
 dotenvSafe.config();
 
 function connectOneTimeToDatabase() {
@@ -283,14 +298,15 @@ export async function insertTile({
   moodId,
   achievements,
   gratitude,
+  affirmations,
 }) {
   const tile = await sql`
     INSERT INTO tiles
-    (user_id, day, mood_id, achievements, gratitude)
+    (user_id, day, mood_id, achievements, gratitude, affirmations)
     VALUES
-    (${userId}, ${day}, ${moodId}, ${achievements}, ${gratitude})
+    (${userId}, ${day}, ${moodId}, ${achievements}, ${gratitude}, ${affirmations})
     RETURNING
-    user_id, day, mood_id, achievements, gratitude
+    user_id, day, mood_id, achievements, gratitude, affirmations
     `;
   return tile && camelcaseKeys(tile)[0];
 }
@@ -341,6 +357,7 @@ export async function getSingleTile(id) {
       tiles.day,
       tiles.achievements,
       tiles.gratitude,
+      tiles.affirmations,
       tiles.mood_id
      FROM
       tiles,
@@ -390,7 +407,8 @@ export async function getTileByTileId(tileId) {
       tiles.id,
       mood_id,
       achievements,
-      gratitude
+      gratitude,
+      affirmations
     FROM
       tiles
     WHERE
