@@ -67,14 +67,14 @@ export default function UserProfile(props: Props) {
         <div css={heroSectionHeadingImageContainer}>
           <div css={heroSectionHeading}>
             <div css={headingStyle}>
-              <h2>
-                Logged in as{' '}
+              <h2 className="header2-text">
+                User Profile of{' '}
                 <strong>
                   <em>{props.user.username}</em>
                 </strong>
               </h2>
 
-              <div className="userInformation">
+              <div className="lead-text">
                 <p>
                   <strong>User Name:</strong> {props.user.username}
                 </p>

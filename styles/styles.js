@@ -495,7 +495,7 @@ export const heroSection = css`
 export const heroSectionHeadingImageContainer = css`
   display: flex;
   flex-direction: row;
-  padding: 0px 64px 0px 6px;
+  padding: 0px 64px;
 
   @media (max-width: 768px) {
     flex-direction: column;

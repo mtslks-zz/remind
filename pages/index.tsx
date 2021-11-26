@@ -33,16 +33,21 @@ export default function Home(props: Props) {
             <div css={heroSectionHeading}>
               <div css={headingStyle}>
                 <h1 className="header1-text">Mindfulness Made Easy.</h1>
-                <a className="lead-text">
-                  The <strong>(re)mind</strong> tracker is the easiest way to
-                  achieve a more mindful state.
-                </a>
-                <a className="lead-text">
-                  Track your progress on a daily basis to reflect on your mood,
-                  goals, and the things you are grateful for. Review your
-                  entries over time and (re)mind yourself of the good days. It's
-                  that simple!
-                </a>
+                <div>
+                  <a className="paragraph-text">
+                    The <strong>(re)mind</strong> tracker is the easiest way to
+                    achieve a more mindful state.
+                  </a>
+                </div>
+                <p />
+                <div>
+                  <a className="paragraph-text">
+                    Track your progress on a daily basis to reflect on your
+                    mood, goals, and the things you are grateful for. Review
+                    your entries over time and (re)mind yourself of the good
+                    days. It's that simple!
+                  </a>
+                </div>
                 <div css={buttonContainer}>
                   {props.username ? (
                     <div css={buttonContainer}>

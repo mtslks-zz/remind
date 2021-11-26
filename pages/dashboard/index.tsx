@@ -272,8 +272,13 @@ export default function Tiles(props: Props) {
                     max-length="10000"
                   />
                 </div>
-                <QuoteCard />
                 <div>
+                  <h3 className="header2-text">Quote of the day</h3>
+                  <div>
+                    <QuoteCard />
+                  </div>
+                </div>
+                <div css={buttonContainer}>
                   <button css={buttonStylesStandard}>Save</button>
                 </div>
               </form>
