@@ -44,10 +44,9 @@ export const wrapper = css`
 export const tileFormStyle = css`
   display: flex;
   flex-direction: column;
-  justify-content: left;
-  align-items: left;
-  width: 25vh;
-  padding-bottom: 50px;
+
+  width: 100vh;
+  margin: 50px;
 
   label {
     display: flex;

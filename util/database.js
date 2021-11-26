@@ -279,18 +279,18 @@ export async function insertFiveMinuteSessionWithoutUserId(token) {
 export async function insertTile({
   userId,
   day,
-  moodId,
+  /* moodId, */
   achievements,
   gratitude,
   affirmations,
 }) {
   const tile = await sql`
     INSERT INTO tiles
-    (user_id, day, mood_id, achievements, gratitude, affirmations)
+    (user_id, day, /* mood_id, */ achievements, gratitude, affirmations)
     VALUES
-    (${userId}, ${day}, ${moodId}, ${achievements}, ${gratitude}, ${affirmations})
+    (${userId}, ${day}, ${achievements}, ${gratitude}, ${affirmations})
     RETURNING
-    user_id, day, mood_id, achievements, gratitude, affirmations
+    user_id, day, /* mood_id,*/ achievements, gratitude, affirmations
     `;
   return tile && camelcaseKeys(tile)[0];
 }
@@ -341,8 +341,8 @@ export async function getSingleTile(id) {
       tiles.day,
       tiles.achievements,
       tiles.gratitude,
-      tiles.affirmations,
-      tiles.mood_id
+      tiles.affirmations
+      /* tiles.mood_id */
      FROM
       tiles,
       sessions
@@ -389,7 +389,7 @@ export async function getTileByTileId(tileId) {
   const tiles = await sql`
     SELECT
       tiles.id,
-      mood_id,
+      /* mood_id,*/
       achievements,
       gratitude,
       affirmations

@@ -25,14 +25,14 @@ export type Errors = {
 export type Tile = {
   id: number;
   userId: number;
-  moodId: number;
+  // moodId: number;
   achievements: string;
   gratitude: string;
   affirmations: string;
   day: string;
 };
 
-export type Mood = {
-  id: number;
-  title: string;
-};
+// export type Mood = {
+//   id: number;
+//   title: string;
+// };

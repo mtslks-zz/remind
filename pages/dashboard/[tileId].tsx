@@ -16,11 +16,11 @@ import {
   imageContainer,
   tilesContainer,
 } from '../../styles/styles';
-import { Errors, Mood, Tile } from '../../util/types';
+import { Errors, Tile } from '../../util/types';
 
 type Props = {
   username?: string;
-  moods: Mood;
+  // moods: Mood;
   tiles: Tile;
   errors: Errors[];
   day: string;
@@ -54,7 +54,6 @@ export default function SingleTile(props: Props) {
           <div css={heroSectionHeading}>
             <div css={tilesContainer}>
               <h2>Single Tile Page for {props.tiles.day}</h2>
-              <div>Captured Mood: {props.moods.id}</div>
               <div>Achievements: {props.tiles.achievements}</div>
               <div>Gratitude: {props.tiles.gratitude}</div>
             </div>
@@ -119,7 +118,7 @@ export default function SingleTile(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { getValidSessionByToken, getMood } = await import(
+  const { getValidSessionByToken /* getMood */ } = await import(
     '../../util/database'
   );
 
@@ -149,9 +148,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     },
   );
   const tiles = await tileResponse.json();
-  const moods = await getMood();
+  // const moods = await getMood();
 
   return {
-    props: { userId: isValidSession.userId, tiles, moods },
+    props: { userId: isValidSession.userId, tiles /* moods */ },
   };
 }

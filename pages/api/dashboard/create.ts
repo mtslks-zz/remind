@@ -21,7 +21,6 @@ export default async function createTileHandler(
       const insertedTile = await insertTile({
         userId: req.body.userId,
         day: req.body.day,
-        moodId: req.body.moodId,
         achievements: req.body.achievements,
         gratitude: req.body.gratitude,
         affirmations: req.body.affirmations,

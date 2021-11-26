@@ -88,46 +88,47 @@ export default function UserProfile(props: Props) {
                   <strong>Last Name:</strong> {props.user.lastName}
                 </p>
               </div>
-
               <div css={buttonContainer}>
-                <button
-                  css={buttonStylesStandard}
-                  onClick={async (event) => {
-                    event.preventDefault();
-                    if (
-                      !window.confirm(
-                        `Are you sure you want to delete your account? This cannot be reversed!`,
-                      )
-                    ) {
-                      return;
-                    }
+                <div css={buttonContainer}>
+                  <button
+                    css={buttonStylesStandard}
+                    onClick={async (event) => {
+                      event.preventDefault();
+                      if (
+                        !window.confirm(
+                          `Are you sure you want to delete your account? This cannot be reversed!`,
+                        )
+                      ) {
+                        return;
+                      }
 
-                    const response = await fetch(
-                      `/api/users/${props.user.username}`,
-                      {
-                        method: 'DELETE',
-                        headers: {
-                          'Content-Type': 'application/json',
+                      const response = await fetch(
+                        `/api/users/${props.user.username}`,
+                        {
+                          method: 'DELETE',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            username: props.user.username,
+                          }),
                         },
-                        body: JSON.stringify({
-                          username: props.user.username,
-                        }),
-                      },
-                    );
+                      );
 
-                    await response.json();
+                      await response.json();
 
-                    // Navigate to deleted page after deleting account
-                    router.push(`/deleted-user`);
-                  }}
-                >
-                  Delete account
-                </button>
-                <button css={buttonStylesStandard}>
-                  <Link href="/logout">
-                    <a>Logout</a>
-                  </Link>
-                </button>
+                      // Navigate to deleted page after deleting account
+                      router.push(`/deleted-user`);
+                    }}
+                  >
+                    Delete account
+                  </button>
+                  <button css={buttonStylesStandard}>
+                    <Link href="/logout">
+                      <a>Logout</a>
+                    </Link>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

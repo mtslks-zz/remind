@@ -23,6 +23,12 @@ a {
   font-weight: 700;
 }
 
+.header2-text {
+  font-size: 2em;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+}
+
 .lead-text  {
   font-size: 1em;
   font-family: 'Nunito', sans-serif;

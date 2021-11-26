@@ -7,27 +7,27 @@ import { useState } from 'react';
 import Layout from '../../components/Layout';
 import QuoteCard from '../../components/QuoteGenerator';
 import {
+  buttonContainer,
   buttonStylesStandard,
-  heroSectionHeading,
   heroSectionHeadingImageContainer,
   singleTileContainer,
   tileFormStyle,
   tileGrid,
 } from '../../styles/styles';
-import { getMood } from '../../util/database';
+// import { getMood } from '../../util/database';
 import { Tile } from '../../util/types';
 
 type Props = {
   username?: string;
-  moods: Mood[];
+  // moods: Mood[];
   userId: number;
   tiles: Tile[];
 };
 
-type Mood = {
-  id: number;
-  title: string;
-};
+// type Mood = {
+//   id: number;
+//   title: string;
+// };
 
 const datepickerStyle = css`
   ::-webkit-datetime-edit {
@@ -51,7 +51,7 @@ export const dashboardContainer = css`
 
 const dashboardFrame = css`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100vh;
   padding: 50px;
 
@@ -150,13 +150,27 @@ export default function Tiles(props: Props) {
       <section css={dashboardContainer}>
         <div css={heroSectionHeadingImageContainer}>
           <div css={dashboardHeading}>
-            <h2 className="header1-text">Your Dashboard</h2>
-            <div css={dashboardFrame}>
-              <div>
-                <a href="#tiles">Take me to tiles directly</a>
+            <div>
+              <h2 className="header1-text">Your Dashboard</h2>
+              <div css={buttonContainer}>
+                <div css={buttonContainer}>
+                  <div>
+                    <a href="#tiles" css={buttonStylesStandard}>
+                      My Entries
+                    </a>
+                  </div>
+                  <div>
+                    <Link href={`/users/${props.username}`}>
+                      <a css={buttonStylesStandard}>My Profile</a>
+                    </Link>
+                  </div>
+                </div>{' '}
               </div>
+            </div>
+
+            <div>
               <form
-                css={tileFormStyle}
+                css={dashboardFrame}
                 onSubmit={async (event) => {
                   event.preventDefault();
                   // console.log(props.userId);
@@ -169,7 +183,7 @@ export default function Tiles(props: Props) {
                     body: JSON.stringify({
                       day: day,
                       userId: props.userId,
-                      moodId: Number(event.currentTarget.mood.value),
+                      //  moodId: Number(event.currentTarget.mood.value),
                       achievements: event.currentTarget.achievements.value,
                       gratitude: event.currentTarget.gratitude.value,
                       affirmations: event.currentTarget.affirmations.value,
@@ -189,7 +203,7 @@ export default function Tiles(props: Props) {
               >
                 <div>
                   <label htmlFor="date-picker">
-                    <h2>New Entry</h2>
+                    <h2 className="header2-text">New Journal Entry | {day}</h2>
                   </label>
                 </div>
                 <input
@@ -205,7 +219,7 @@ export default function Tiles(props: Props) {
                   }}
                 />
 
-                <div>
+                {/* <div>
                   <label htmlFor="gratitude">
                     <h2>Set your mood for the day</h2>
                   </label>
@@ -219,43 +233,42 @@ export default function Tiles(props: Props) {
                       </option>
                     );
                   })}
-                </select>
+                </select> */}
                 <div>
                   <label htmlFor="achievements">
-                    <h2>Goals & Achievements</h2>
+                    <h3>What would make today great?</h3>
                   </label>
                 </div>
 
                 <div>
                   <textarea
                     name="achievements"
-                    placeholder="Add some goals & achievements for today..."
+                    placeholder="What would make today great? State your goals and targets you want to achieve today."
                     max-length="10000"
                   />
                 </div>
                 <div>
                   <label htmlFor="gratitude">
-                    <h2>Gratitude Journal</h2>
+                    <h3>I am grateful for...</h3>
                   </label>
                 </div>
                 <div>
                   <textarea
                     name="gratitude"
-                    placeholder="What are you grateful for today?"
+                    placeholder="State 3 things you are grateful for today."
                     max-length="10000"
                   />
                 </div>
 
                 <div>
                   <label htmlFor="affirmations">
-                    <h2>Affirmations</h2>
+                    <h3>Daily affirmation</h3>
                   </label>
                 </div>
-
                 <div>
                   <textarea
                     name="affirmations"
-                    placeholder="Affirm yourself..."
+                    placeholder="Set your daily affirmation ritual here by stating to yourself what you believe is true and important to you, and what you want to have manifested in your life."
                     max-length="10000"
                   />
                 </div>
@@ -269,7 +282,7 @@ export default function Tiles(props: Props) {
         </div>
         <a id="tiles">
           <div>
-            <h2>My Daily Entries</h2>
+            <h2 className="header2-text">My Daily Entries</h2>
           </div>
         </a>
         <div css={tileGrid}>
@@ -328,9 +341,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     credentials: 'include',
   });
   const tiles = await tileResponse.json();
-  const moods = await getMood();
+  // const moods = await getMood();
 
   return {
-    props: { moods, userId: isValidSession.userId, tiles },
+    props: { /* moods,*/ userId: isValidSession.userId, tiles },
   };
 }

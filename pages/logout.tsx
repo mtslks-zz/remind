@@ -38,9 +38,18 @@ export default function Logout(props: LogoutProps) {
               <h1 className="header1-text">You have been logged out.</h1>
               <p className="paragraph-text">Thank you for using (re)mind.</p>
               <div css={buttonContainer}>
-                <Link href="/">
-                  <a css={buttonStylesStandard}>Back to Main</a>
-                </Link>
+                <div css={buttonContainer}>
+                  <div>
+                    <Link href="/">
+                      <a css={buttonStylesStandard}>Back to Main</a>
+                    </Link>
+                  </div>
+                  <div>
+                    <Link href="/">
+                      <a css={buttonStylesStandard}>Login Again</a>
+                    </Link>
+                  </div>
+                </div>
               </div>{' '}
             </div>
           </div>
