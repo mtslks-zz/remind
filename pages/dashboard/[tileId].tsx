@@ -4,8 +4,11 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import Layout from '../../components/Layout';
 import {
+  buttonContainer,
+  buttonStylesStandard,
   heroSection,
   heroSectionHeading,
   heroSectionHeadingImageContainer,
@@ -21,9 +24,13 @@ type Props = {
   tiles: Tile;
   errors: Errors[];
   day: string;
+  tileId: Number;
 };
 
 export default function SingleTile(props: Props) {
+  const [showEdit, setShowEdit] = useState(true);
+  const [errors, setErrors] = useState('');
+
   const router = useRouter();
 
   if ('errors' in props) {
@@ -51,6 +58,53 @@ export default function SingleTile(props: Props) {
               <div>Achievements: {props.tiles.achievements}</div>
               <div>Gratitude: {props.tiles.gratitude}</div>
             </div>
+            <div css={buttonContainer}>
+              {/* Delete Tile */}
+              <button
+                css={buttonStylesStandard}
+                onClick={async (event) => {
+                  event.preventDefault();
+                  if (
+                    !window.confirm(
+                      `Do you really want to delete this tile? It will be gone forever.`,
+                    )
+                  ) {
+                    return;
+                  }
+
+                  const response = await fetch(
+                    `/api/dashboard/${props.tileId}`,
+                    {
+                      method: 'DELETE',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        id: props.tileId,
+                      }),
+                    },
+                  );
+
+                  const json = await response.json();
+
+                  if ('errors' in json) {
+                    setErrors(json.errors[0].message);
+                    return;
+                  }
+
+                  // Navigate back to dashboard after deletion
+                  router.push(`/dashboard`);
+                }}
+              >
+                Delete entry
+              </button>
+            </div>
+            <Link href="/dashboard">
+              <a css={buttonStylesStandard}>Back</a>
+            </Link>
+            <Link href="/logout">
+              <a css={buttonStylesStandard}>Logout</a>
+            </Link>
           </div>
           <div css={heroSectionImage}>
             <img

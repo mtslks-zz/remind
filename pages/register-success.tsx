@@ -58,11 +58,11 @@ export default function RegistrationSuccessful(props: Props) {
         <div css={contentContainer}>
           <div css={containerLeft}>
             <h3 className="header1-text">
-              Congratulations, your account has been created.
+              Welcome to (re)mind. Your account has been created.
             </h3>
 
             <Link href="/dashboard">
-              <a css={buttonStylesStandard}>Go to dashboard now</a>
+              <a css={buttonStylesStandard}>Start Tracking</a>
             </Link>
             <Link href={`/users/${props.username}`}>
               <a css={buttonStylesStandard}>My Profile</a>

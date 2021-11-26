@@ -15,7 +15,7 @@ export default async function createTileHandler(
 ) {
   if (req.method === 'POST') {
     // testing request
-    console.log(req.body);
+    // console.log(req.body);
     // Retrieve entries from the request body from frontend
     try {
       const insertedTile = await insertTile({

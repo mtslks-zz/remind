@@ -44,7 +44,7 @@ export default function Login(props: Props) {
   return (
     <Layout username={props.username}>
       <Head>
-        <title>(re)mind Login</title>
+        <title>(re)mind | Login</title>
       </Head>
       <section css={pageContainer}>
         <div css={heroSectionHeadingImageContainer}>

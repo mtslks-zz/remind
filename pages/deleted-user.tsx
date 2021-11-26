@@ -4,7 +4,13 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
-import { pageContainer } from '../styles/styles';
+import {
+  buttonStylesStandard,
+  headingStyle,
+  heroSectionHeading,
+  heroSectionHeadingImageContainer,
+  pageContainer,
+} from '../styles/styles';
 import { deleteSessionByToken } from '../util/database';
 
 type Props = {
@@ -19,12 +25,18 @@ export default function UserDeleted(props: Props) {
       <Head>
         <title>User deleted</title>
       </Head>
+
       <div css={pageContainer}>
-        <h2>Your account has been deleted successfully.</h2>
-        <h3>We hope to see you soon again!</h3>
-        <Link href="/register">
-          <a className="button-general">Sign Up Again</a>
-        </Link>
+        <div>
+          <div>
+            <h2 className="header1-text">
+              Sorry to see you go...your account has been deleted successfully.
+            </h2>
+            <Link href="/register">
+              <a css={buttonStylesStandard}>Sign Up Again</a>
+            </Link>
+          </div>
+        </div>
       </div>
     </Layout>
   );

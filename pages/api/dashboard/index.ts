@@ -6,12 +6,12 @@ export default async function TileHandler(
   res: NextApiResponse,
 ) {
   if (req.method === 'GET') {
-    console.log('cookies', req.cookies);
+    // console.log('cookies', req.cookies);
     const validSession = await getValidSessionByToken(req.cookies.sessionToken);
 
     if (validSession) {
       const tiles = await getAllTiles(validSession.userId);
-      console.log('here are the tiles', tiles);
+      // console.log('here are the tiles', tiles);
 
       // Once the tiles are retrieved, return them
       return res.status(200).json(tiles);

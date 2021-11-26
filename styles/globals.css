@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Adamina&family=DM+Serif+Text&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
 
-html,
+html {
+  scroll-behavior: smooth;
+}
 body {
   padding: 0;
   margin: 0;
@@ -23,7 +24,7 @@ a {
   font-size: 1em;
   font-family: 'Merriweather', serif;
   text-align: justify;
-  line-height: 1.8;
+  line-height: 2.2;
 }
 
 * {

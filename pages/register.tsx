@@ -36,7 +36,7 @@ export default function Registration(props: Props) {
   return (
     <Layout username={props.username}>
       <Head>
-        <title>(re)mind Registration</title>
+        <title>(re)mind | Registration</title>
       </Head>
       <section css={pageContainer}>
         <div css={heroSectionHeadingImageContainer}>

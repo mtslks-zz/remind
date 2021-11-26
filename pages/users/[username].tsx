@@ -1,19 +1,19 @@
 import { css } from '@emotion/react';
-// import axios from 'axios';
-// import { Image } from 'cloudinary-react';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+// import { useState } from 'react';
 import Layout from '../../components/Layout';
 import {
   buttonContainer,
+  buttonStylesStandard,
   headingStyle,
   heroSection,
   heroSectionHeading,
   heroSectionHeadingImageContainer,
+  heroSectionImage,
 } from '../../styles/styles';
 import { Errors, User } from '../../util/types';
 import { SingleUserResponseType } from '../api/users/[username]';
@@ -24,103 +24,8 @@ type Props = {
   errors?: Errors[];
 };
 
-const contentContainer = css`
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-
-  @media (max-width: 450px) {
-    flex-direction: column;
-  }
-`;
-
-const containerLeft = css`
-  width: 65%;
-  margin-right: 24px;
-
-  @media (max-width: 450px) {
-    width: 100%;
-  }
-
-  h3 {
-    margin-bottom: 64px;
-  }
-
-  .button-general {
-    font-size: 1.3rem;
-    margin-right: 24px;
-    border: none;
-
-    @media (max-width: 768px) {
-      margin-right: 12px;
-    }
-
-    @media (max-width: 450px) {
-      margin-right: 0px;
-      margin-top: 32px;
-      width: 220px;
-    }
-  }
-
-  .userInformation {
-    margin-bottom: 64px;
-
-    p {
-      margin: 6px 0;
-    }
-  }
-`;
-
-const containerRight = css`
-  width: 35%;
-  padding-top: 48px;
-
-  @media (max-width: 450px) {
-    width: 100%;
-  }
-
-  img {
-    width: 100%;
-  }
-`;
-
 export default function UserProfile(props: Props) {
   const router = useRouter();
-  // const [image, setImage] = useState('');
-  // const [imageSelected, setImageSelected] = useState('');
-
-  // Profile picture upload functionality
-
-  // const uploadImage = async (event) => {
-  //   const files = event.currentTarget.files;
-  //   const formData = new FormData();
-  //   formData.append('file', imageSelected);
-  //   formData.append('upload_preset', 'remind_upload');
-  //   setLoading(true);
-  //   const res = await fetch(
-  //     'https://api.cloudinary.com/v1_1/dng1aerxw/image/upload',
-  //     {
-  //       method: 'POST',
-  //       body: formData,
-  //     },
-  //   );
-  //   const file = await res.json();
-
-  //   setImage(file.secure_url);
-  //   setLoading(false);
-  // };
-
-  // const uploadImage = (files) => {
-  //   const formData = new FormData();
-  //   formData.append('file', imageSelected);
-  //   formData.append('upload_preset', 'remind_upload');
-
-  //   axios
-  //     .post('https://api.cloudinary.com/v1_1/dng1aerxw/image/upload', formData)
-  //     .then((response) => {
-  //       console.log(response);
-  //     });
-  // };
 
   // Show message if user not allowed
   const errors = props.errors;
@@ -138,8 +43,7 @@ export default function UserProfile(props: Props) {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (!props.user) {
+  if (!props.username) {
     return (
       <Layout username={props.username}>
         <Head>
@@ -184,71 +88,53 @@ export default function UserProfile(props: Props) {
                   <strong>Last Name:</strong> {props.user.lastName}
                 </p>
               </div>
-              {/* <Image
-              style={{ width: 200 }}
-              cloudName="dng1aerxw"
-              publicId={setImage}
-            /> */}
-              {/* <div>
-              <input
-                type="file"
-                onChange={(event) => {
-                  setImageSelected(event.target.files[0]);
-                }}
-              />
-            </div> */}
-              {/* <div>
-              <button className="button-general" onClick={uploadImage}>
-                Update avatar
-              </button>
-            </div> */}
-            </div>
-            <div css={buttonContainer}>
-              <button
-                className="button-general"
-                onClick={async (event) => {
-                  event.preventDefault();
-                  if (
-                    !window.confirm(
-                      `Are you sure you want to delete your account? This cannot be reversed!`,
-                    )
-                  ) {
-                    return;
-                  }
 
-                  const response = await fetch(
-                    `/api/users/${props.user.username}`,
-                    {
-                      method: 'DELETE',
-                      headers: {
-                        'Content-Type': 'application/json',
+              <div css={buttonContainer}>
+                <button
+                  css={buttonStylesStandard}
+                  onClick={async (event) => {
+                    event.preventDefault();
+                    if (
+                      !window.confirm(
+                        `Are you sure you want to delete your account? This cannot be reversed!`,
+                      )
+                    ) {
+                      return;
+                    }
+
+                    const response = await fetch(
+                      `/api/users/${props.user.username}`,
+                      {
+                        method: 'DELETE',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                          username: props.user.username,
+                        }),
                       },
-                      body: JSON.stringify({
-                        username: props.user.username,
-                      }),
-                    },
-                  );
+                    );
 
-                  await response.json();
+                    await response.json();
 
-                  // Navigate to deleted page after deleting account
-                  router.push(`/deleted-user`);
-                }}
-              >
-                Delete account
-              </button>
-              <button className="button-general">
-                <Link href="/logout">
-                  <a>Logout</a>
-                </Link>
-              </button>
+                    // Navigate to deleted page after deleting account
+                    router.push(`/deleted-user`);
+                  }}
+                >
+                  Delete account
+                </button>
+                <button css={buttonStylesStandard}>
+                  <Link href="/logout">
+                    <a>Logout</a>
+                  </Link>
+                </button>
+              </div>
             </div>
           </div>
-          <div css={containerRight}>
+          <div css={heroSectionImage}>
             <Image
               src="/images/A-Human/profile_standing.svg"
               alt="Man with beard walking"
-              className="registrationImageStyle"
               width={300}
               height={500}
             />

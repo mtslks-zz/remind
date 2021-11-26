@@ -1,20 +1,13 @@
 import { css } from '@emotion/react';
 // import Image from 'next/image';
 import Link from 'next/link';
-import { navContainer } from '../styles/styles';
+import { navContainer, profileImage } from '../styles/styles';
 
 export type HeaderProps = {
   open: any;
   username: string;
   setOpen: any;
 };
-
-export const profileImage = css`
-  display: flex;
-  margin: 10px;
-  flex-direction: column;
-  justify-content: center;
-`;
 
 export default function HeaderNav(props: HeaderProps) {
   return (
@@ -30,11 +23,6 @@ export default function HeaderNav(props: HeaderProps) {
             <li>Tutorial</li>
           </a>
         </Link>
-        {/* <Link href="/contact">
-          <a>
-            <li>Contact</li>
-          </a>
-        </Link> */}
         <li>
           {props.username && (
             <Link href={`/users/${props.username}`} passHref>
@@ -42,13 +30,15 @@ export default function HeaderNav(props: HeaderProps) {
                 css={profileImage}
                 src="/images/svg/user_icon.svg"
                 alt="User profile icon"
-                width={28}
-                height={28}
+                width={32}
+                height={32}
               />
             </Link>
           )}{' '}
           <Link href={`/users/${props.username}`}>
-            <a>{props.username && `${props.username}`}</a>
+            <a>
+              <strong>{props.username && `${props.username}`}</strong>
+            </a>
           </Link>{' '}
         </li>
         <li>

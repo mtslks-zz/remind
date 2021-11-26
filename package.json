@@ -11,6 +11,9 @@
   "dependencies": {
     "@emotion/babel-plugin": "^11.3.0",
     "@emotion/react": "^11.5.0",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.60",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie": "^0.4.1",
     "@types/dotenv-safe": "^8.1.2",
@@ -26,6 +29,7 @@
     "dotenv-safe": "^8.2.0",
     "js-cookie": "^3.0.1",
     "ley": "^0.7.1",
+    "mdi": "^2.2.43",
     "next": "11.1.2",
     "next-cookies": "^2.0.3",
     "postgres": "2.0.0-beta.10",

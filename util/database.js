@@ -371,7 +371,7 @@ export async function getTilesByValidSessionUser(validSessionUserId) {
 export async function deleteTileByTileId(tileId) {
   if (!tileId) return undefined;
 
-  const tiles = await sql`
+  const tile = await sql`
     DELETE FROM
       tiles
     WHERE
@@ -379,7 +379,7 @@ export async function deleteTileByTileId(tileId) {
     RETURNING
       id
   `;
-  return tiles.map((tile) => camelcaseKeys(tile))[0];
+  return tile && camelcaseKeys(tile)[0];
 }
 
 export async function getTileByTileId(tileId) {

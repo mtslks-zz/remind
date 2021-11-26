@@ -2,13 +2,12 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-// import Header from '../components/Header';
 import Layout from '../components/Layout';
 import {
   buttonContainer,
+  buttonStylesDark,
   buttonStylesStandard,
   headingStyle,
-  heroSection,
   heroSectionHeading,
   heroSectionHeadingImageContainer,
   heroSectionImage,
@@ -29,31 +28,50 @@ export default function Home(props: Props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <section css={pageContainer}>
+        <div css={pageContainer}>
           <div css={heroSectionHeadingImageContainer}>
             <div css={heroSectionHeading}>
               <div css={headingStyle}>
                 <h1 className="header1-text">Mindfulness Made Easy.</h1>
                 <p className="paragraph-text">
-                  <strong>(re)mind</strong> is the easy way to experience more
-                  Zen in your life.
+                  The <strong>(re)mind</strong> tracker is the easiest way to
+                  achieve a more mindful state.
                 </p>
                 <p className="paragraph-text">
-                  Simply login on a daily basis to reflect on your mood, daily
-                  goals, and gratefulness. Track your progress over time and
-                  (re)mind yourself of good days.
+                  Track your progress on a daily basis to reflect on your mood,
+                  goals, and the things you are grateful for. Review your
+                  entries over time and (re)mind yourself of the good days. It's
+                  that simple!
                 </p>
                 <div css={buttonContainer}>
                   {props.username ? (
-                    <Link href="/dashboard">
-                      <a css={buttonStylesStandard}>My Dashboard</a>
-                    </Link>
+                    <div css={buttonContainer}>
+                      <div>
+                        <Link href="/dashboard">
+                          <a css={buttonStylesStandard}>Dashboard</a>
+                        </Link>
+                      </div>
+                      <div>
+                        <Link href="/dashboard#tiles">
+                          <a css={buttonStylesStandard}>My Entries</a>
+                        </Link>
+                      </div>
+                    </div>
                   ) : (
-                    <Link href="/register">
-                      <a css={buttonStylesStandard}>Sign Up</a>
-                    </Link>
+                    <div css={buttonContainer}>
+                      <div>
+                        <Link href="/register">
+                          <a css={buttonStylesStandard}>Sign Up</a>
+                        </Link>
+                      </div>
+                      <div>
+                        <Link href="/login">
+                          <a css={buttonStylesStandard}>Login</a>
+                        </Link>
+                      </div>
+                    </div>
                   )}
-                </div>{' '}
+                </div>
               </div>
             </div>
             <div css={heroSectionImage}>
@@ -65,7 +83,7 @@ export default function Home(props: Props) {
               />
             </div>
           </div>
-        </section>
+        </div>
       </>
     </Layout>
   );
