@@ -147,7 +147,7 @@ export default function UserProfile(props: Props) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const response = await fetch(
-    `${process.env.API_BASE_URL}/users/${context.query.username}`,
+    `${process.env.BASE_URL}/api/users/${context.query.username}`,
     {
       method: 'GET',
       headers: {
