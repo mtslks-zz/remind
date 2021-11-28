@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import OfflineBoltOutlinedIcon from '@material-ui/icons/OfflineBoltOutlined';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -9,9 +10,9 @@ import QuoteCard from '../../components/QuoteGenerator';
 import {
   buttonContainer,
   buttonStylesStandard,
+  datepickerStyle,
   heroSectionHeadingImageContainer,
   singleTileContainer,
-  tileFormStyle,
   tileGrid,
 } from '../../styles/styles';
 // import { getMood } from '../../util/database';
@@ -29,20 +30,10 @@ type Props = {
 //   title: string;
 // };
 
-const datepickerStyle = css`
-  ::-webkit-datetime-edit {
-    font-size: 1.3em;
-    padding: 0.4em;
-  }
-  ::-webkit-datetime-edit-text {
-    padding: 0 0.1em;
-  }
-`;
-
 // Dashboard styling
 export const dashboardContainer = css`
   background-color: white;
-  padding: 48px 24px;
+  padding: 24px 24px;
 
   @media (max-width: 768px) {
     padding: 96px 24px;
@@ -51,9 +42,13 @@ export const dashboardContainer = css`
 
 const dashboardFrame = css`
   display: flex;
+  background-color: #0094e946;
+  box-shadow: 0 7px 17px rgb(0 0 0 / 30%);
   flex-direction: column;
+  border-radius: 16px;
   width: 100vh;
-  padding: 50px;
+  justify-items: center;
+  padding: 12px 24px 12px 24px;
 
   @media (max-width: 1260px) {
     h1 {
@@ -121,7 +116,7 @@ export const dashboardHeading = css`
   align-items: left;
   width: 65%;
   height: 100%;
-  margin: 0px 64px 64px 64px;
+  margin: 0px 64px 12px 64px;
   padding: 32px 0px 64px 0px;
 
   @media (max-width: 768px) {
@@ -133,6 +128,15 @@ export const dashboardHeading = css`
     width: 100%;
     padding: 0px 0px;
   }
+`;
+
+export const tileGridContainer = css`
+  display: flex;
+  padding: 0px 24px 12px 24px;
+  margin: 30px;
+  border-radius: 16px;
+  background-color: #0094e946;
+  height: 100%;
 `;
 
 export default function Tiles(props: Props) {
@@ -150,21 +154,21 @@ export default function Tiles(props: Props) {
       <section css={dashboardContainer}>
         <div css={heroSectionHeadingImageContainer}>
           <div css={dashboardHeading}>
-            <div>
-              <h2 className="header1-text">Your Dashboard</h2>
+            <h2 className="header1-text">
+              Your Dashboard <OfflineBoltOutlinedIcon />
+            </h2>
+            <div css={buttonContainer}>
               <div css={buttonContainer}>
-                <div css={buttonContainer}>
-                  <div>
-                    <a href="#tiles" css={buttonStylesStandard}>
-                      My Entries
-                    </a>
-                  </div>
-                  <div>
-                    <Link href={`/users/${props.username}`}>
-                      <a css={buttonStylesStandard}>My Profile</a>
-                    </Link>
-                  </div>
-                </div>{' '}
+                <div>
+                  <a href="#tiles" css={buttonStylesStandard}>
+                    My Entries
+                  </a>
+                </div>
+                <div>
+                  <Link href={`/users/${props.username}`}>
+                    <a css={buttonStylesStandard}>My Profile</a>
+                  </Link>
+                </div>
               </div>
             </div>
 
@@ -268,52 +272,63 @@ export default function Tiles(props: Props) {
                 <div>
                   <textarea
                     name="affirmations"
-                    placeholder="Set your daily affirmation ritual here by stating to yourself what you believe is true and important to you, and what you want to have manifested in your life."
+                    placeholder="Set your daily affirmation by stating what you believe is true and important to you, and what you want to have manifested in your life."
                     max-length="10000"
                   />
                 </div>
-                <div>
-                  <h3 className="header2-text">Quote of the day</h3>
-                </div>
+
                 <div css={buttonContainer}>
                   <button css={buttonStylesStandard}>Save</button>
                 </div>
               </form>
+
+              <div>
+                <h3 className="header2-text">Quote of the day</h3>
+              </div>
               <div>
                 <QuoteCard />
               </div>
             </div>
           </div>
         </div>
-        <a id="tiles">
+
+        <div css={tileGridContainer}>
           <div>
-            <h2 className="header2-text">My Daily Entries</h2>
+            <a id="tiles">
+              <h2 className="header2-text">My Entries</h2>
+            </a>
           </div>
-        </a>
-        <div css={tileGrid}>
-          {props.tiles.map((tile) => {
-            return (
-              <div
-                className="card"
-                key={`tile-li-${tile.id}`}
-                css={singleTileContainer}
-              >
-                <div>
-                  <img src="/images/logo.png" alt="(re)mind logo on tile" />
+          <div css={tileGrid}>
+            {props.tiles.map((tile) => {
+              return (
+                <div
+                  className="card"
+                  key={`tile-li-${tile.id}`}
+                  css={singleTileContainer}
+                >
+                  <div>
+                    <img src="/images/logo.png" alt="(re)mind logo on tile" />
+                  </div>
+                  <div className="content">
+                    <Link passHref href={`/dashboard/${tile.id}`}>
+                      <h2>
+                        <a>{tile.day}</a>
+                      </h2>
+                    </Link>
+                    <div>
+                      <strong>Today's goals:</strong> {tile.achievements}
+                    </div>
+                    <div>
+                      <strong>Grateful for:</strong> {tile.gratitude}
+                    </div>
+                    <div>
+                      <strong>Affirmation:</strong> {tile.affirmations}
+                    </div>
+                  </div>
                 </div>
-                <div className="content">
-                  <Link passHref href={`/dashboard/${tile.id}`}>
-                    <h2>
-                      <a>{tile.day}</a>
-                    </h2>
-                  </Link>
-                  <div>{tile.achievements}</div>
-                  <div>{tile.gratitude}</div>
-                  <div>{tile.affirmations}</div>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </section>
     </Layout>

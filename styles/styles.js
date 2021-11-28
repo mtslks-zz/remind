@@ -1,9 +1,5 @@
 import { css } from '@emotion/react';
 
-// Font sizes
-export const normalFontSize = '14px';
-export const smallFontSize = '0.8rem';
-
 // Styles
 export const pageContainer = css`
   background-color: white;
@@ -11,19 +7,6 @@ export const pageContainer = css`
 
   @media (max-width: 768px) {
     padding: 96px 24px;
-  }
-`;
-
-const containerRight = css`
-  width: 35%;
-
-  @media (max-width: 450px) {
-    padding-top: 48px;
-    width: 100%;
-  }
-
-  img {
-    width: 100%;
   }
 `;
 
@@ -44,7 +27,7 @@ export const wrapper = css`
 export const tileFormStyle = css`
   display: flex;
   flex-direction: column;
-
+  box-shadow: 0 7px 17px rgb(0 0 0 / 13%);
   width: 100vh;
   margin: 50px;
 
@@ -89,27 +72,6 @@ export const buttonStylesStandard = css`
     cursor: pointer;
     background: lightgrey;
     border: 0.1rem solid lightgrey;
-    color: white;
-  }
-`;
-
-export const buttonStylesDark = css`
-  display: inline-block;
-  background: white;
-  font-size: 16px;
-  font-weight: 400;
-  border: 0.1rem solid grey;
-  border-radius: 16px;
-  padding: 12px 24px;
-  margin-right: 24px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 5px 0px;
-
-  :hover {
-    cursor: pointer;
-    background: black;
-    border: 0.1rem solid black;
     color: white;
   }
 `;
@@ -167,18 +129,10 @@ export const footerStyle = css`
   height: 50px;
   background-color: #0093e9;
   background-image: linear-gradient(90deg, #0093e9 0%, #80d0c7 100%);
-
-  /* background: rgb(0, 18, 36);
-  background: linear-gradient(
-    90deg,
-    rgba(0, 18, 36, 1) 0%,
-    rgba(0, 69, 255, 0.6755077030812324) 49% */
-
   display: flex;
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
-  font-size: 8px;
   color: white;
   position: fixed;
   bottom: 0;
@@ -216,7 +170,7 @@ export const navItemsContainer = css`
 
   a {
     color: white;
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 250;
     text-decoration: none;
     padding-right: 24px;
@@ -297,23 +251,6 @@ export const headerStyle = css`
   justify-content: space-between;
   background-color: #0093e9;
   background-image: linear-gradient(90deg, #0093e9 0%, #80d0c7 100%);
-
-  /* background: rgb(0, 18, 36);
-  background: linear-gradient(
-    90deg,
-    rgba(0, 18, 36, 1) 0%,
-    rgba(0, 69, 255, 0.6755077030812324) 49% */
-
-  /* background: linear-gradient(
-    91.4deg,
-    #e4e4e4 0%,
-    rgba(75, 154, 227, 0.91) 0.01%,
-    rgba(33, 15, 237, 0.4) 63.54%,
-    rgba(96, 75, 227, 0.36) 99.98%,
-    rgba(75, 136, 227, 0.19) 99.99%,
-    rgba(96, 75, 227, 0) 100%,
-    rgba(96, 75, 227, 0) 100% */
-
   font-weight: 400;
   position: fixed;
   z-index: 1000;
@@ -393,12 +330,6 @@ export const navContainer = (open) => css`
 
     @media (max-width: 1125px) {
       flex-flow: column nowrap;
-      /* background: rgb(0, 18, 36);
-      background: linear-gradient(
-        0deg,
-        rgba(0, 18, 36, 1) 0%,
-        rgba(0, 69, 255, 0.6755077030812324) 49%
-      ); */
       background-color: #0093e9;
       background-image: linear-gradient(0deg, #0093e9 0%, #80d0c7 49%);
       position: fixed;
@@ -597,7 +528,8 @@ export const buttonContainer = css`
   flex-direction: row;
   justify-content: space-between;
   box-sizing: border-box;
-  padding-top: 24px;
+  padding-top: 12px;
+  padding-bottom: 24px;
 
   button {
     display: flex;
@@ -653,10 +585,9 @@ export const heroSectionImage = css`
 export const tilesContainer = css`
   display: flex;
   flex-direction: column;
-  background-color: white;
   border-radius: 16px;
   border: 1px solid grey;
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 5px 0px;
+  box-shadow: 0 7px 17px rgb(0 0 0 / 13%);
   width: 100%;
   height: 50vh;
   margin: 16px 32px 64px 32px;
@@ -683,9 +614,10 @@ export const tilesContainer = css`
 
 export const tileGrid = css`
   display: grid;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
+  padding: 24px;
   a {
     display: block;
     text-align: center;
@@ -711,7 +643,9 @@ export const tileGrid = css`
     position: relative;
     border-radius: 15px;
     cursor: pointer;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.123);
+    box-shadow: 0 7px 17px rgb(0 0 0 / 30%);
+
+    //box-shadow: 0 0 20px rgba(0, 0, 0, 0.123);
   }
   .card img {
     position: absolute;
@@ -736,7 +670,9 @@ export const tileGrid = css`
     transition: all 0.4s;
   }
   .content div {
-    font-size: 1.3em;
+    font-size: 0.8em;
+    line-height: 25px;
+    padding: 3px;
   }
   .card:hover .content {
     height: 220px;
@@ -754,4 +690,14 @@ export const profileImage = css`
   margin: 10px;
   flex-direction: column;
   justify-content: center;
+`;
+
+export const datepickerStyle = css`
+  ::-webkit-datetime-edit {
+    font-size: 1.3em;
+    padding: 0.4em;
+  }
+  ::-webkit-datetime-edit-text {
+    padding: 0 0.1em;
+  }
 `;

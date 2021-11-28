@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { insertTile } from '../../../util/database';
+import { getValidSessionByToken, insertTile } from '../../../util/database';
 import { Errors, User } from '../../../util/types';
 
 export type CreateTileResponse =

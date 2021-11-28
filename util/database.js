@@ -41,6 +41,28 @@ export async function getUsers() {
   return users.map((user) => camelcaseKeys(user));
 }
 
+export async function updateUser(firstName, lastName, username, email) {
+  const users = await sql`
+  UPDATE
+    users
+  SET
+    firstName = ${firstName},
+    lastName = ${lastName},
+    username = ${username},
+    email = ${email}
+  WHERE
+    username = ${username}
+  RETURNING
+    id,
+    firstName,
+    lastName,
+    username,
+    email
+`;
+
+  return camelcaseKeys(users[0]);
+}
+
 export async function getValidSessionByToken(token) {
   if (!token) return undefined;
 
