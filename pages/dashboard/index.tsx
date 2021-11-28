@@ -274,14 +274,14 @@ export default function Tiles(props: Props) {
                 </div>
                 <div>
                   <h3 className="header2-text">Quote of the day</h3>
-                  <div>
-                    <QuoteCard />
-                  </div>
                 </div>
                 <div css={buttonContainer}>
                   <button css={buttonStylesStandard}>Save</button>
                 </div>
               </form>
+              <div>
+                <QuoteCard />
+              </div>
             </div>
           </div>
         </div>
