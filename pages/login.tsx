@@ -110,7 +110,7 @@ export default function Login(props: Props) {
                 {' '}
                 <Link href="/register">
                   <a>
-                    <span>...or create a new account here</span>
+                    <span>...or create a new account</span>
                   </a>
                 </Link>
               </div>
