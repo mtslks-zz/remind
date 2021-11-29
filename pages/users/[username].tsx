@@ -9,6 +9,7 @@ import Layout from '../../components/Layout';
 import {
   buttonContainer,
   buttonStylesStandard,
+  buttonStylesWarning,
   headingStyle,
   heroSection,
   heroSectionHeading,
@@ -90,8 +91,18 @@ export default function UserProfile(props: Props) {
               </div>
               <div css={buttonContainer}>
                 <div css={buttonContainer}>
+                  <button css={buttonStylesStandard}>
+                    <Link href="/dashboard">
+                      <a>Dashboard</a>
+                    </Link>
+                  </button>
+                  <button css={buttonStylesStandard}>
+                    <Link href="/logout">
+                      <a>Logout</a>
+                    </Link>
+                  </button>
                   <button
-                    css={buttonStylesStandard}
+                    css={buttonStylesWarning}
                     onClick={async (event) => {
                       event.preventDefault();
                       if (
@@ -122,11 +133,6 @@ export default function UserProfile(props: Props) {
                     }}
                   >
                     Delete account
-                  </button>
-                  <button css={buttonStylesStandard}>
-                    <Link href="/logout">
-                      <a>Logout</a>
-                    </Link>
                   </button>
                 </div>
               </div>

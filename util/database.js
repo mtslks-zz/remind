@@ -305,14 +305,15 @@ export async function insertTile({
   achievements,
   gratitude,
   affirmations,
+  quote,
 }) {
   const tile = await sql`
     INSERT INTO tiles
-    (user_id, day, /* mood_id, */ achievements, gratitude, affirmations)
+    (user_id, day, /* mood_id, */ achievements, gratitude, affirmations, quote)
     VALUES
-    (${userId}, ${day}, ${achievements}, ${gratitude}, ${affirmations})
+    (${userId}, ${day}, ${achievements}, ${gratitude}, ${affirmations}, ${quote})
     RETURNING
-    user_id, day, /* mood_id,*/ achievements, gratitude, affirmations
+    user_id, day, /* mood_id,*/ achievements, gratitude, affirmations, quote
     `;
   return tile && camelcaseKeys(tile)[0];
 }
@@ -363,7 +364,8 @@ export async function getSingleTile(id) {
       tiles.day,
       tiles.achievements,
       tiles.gratitude,
-      tiles.affirmations
+      tiles.affirmations,
+      tiles.quote
       /* tiles.mood_id */
      FROM
       tiles,
@@ -414,7 +416,8 @@ export async function getTileByTileId(tileId) {
       /* mood_id,*/
       achievements,
       gratitude,
-      affirmations
+      affirmations,
+      quote
     FROM
       tiles
     WHERE

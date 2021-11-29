@@ -30,6 +30,7 @@ export type Tile = {
   gratitude: string;
   affirmations: string;
   day: string;
+  quote: string;
 };
 
 // export type Mood = {

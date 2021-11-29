@@ -29,6 +29,12 @@ a {
   font-weight: 600;
 }
 
+.header3-text {
+  font-size: 1.5em;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+}
+
 .lead-text  {
   font-size: 1.4em;
   font-family: 'Nunito', sans-serif;
@@ -38,8 +44,7 @@ a {
 }
 
 .paragraph-text {
-  font-size: 1.2em;
-  font-family: 'Lora', serif;
+  font-size: 1em;
   font-weight: 400;
   text-align: justify;
   line-height: 2.2;

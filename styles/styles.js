@@ -58,6 +58,7 @@ export const tileFormStyle = css`
 export const buttonStylesStandard = css`
   display: inline-block;
   background: white;
+  align-items: center;
   font-size: 16px;
   font-weight: 400;
   border: 0.1rem solid grey;
@@ -72,6 +73,28 @@ export const buttonStylesStandard = css`
     cursor: pointer;
     background: lightgrey;
     border: 0.1rem solid lightgrey;
+    color: white;
+  }
+`;
+
+export const buttonStylesWarning = css`
+  display: inline-block;
+  background: white;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 400;
+  border: 0.1rem solid grey;
+  border-radius: 16px;
+  padding: 12px 24px;
+  margin-right: 24px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 5px 0px;
+
+  :hover {
+    cursor: pointer;
+    background: #ff7f7f;
+    border: 0.1rem solid #ff7f7f;
     color: white;
   }
 `;
@@ -612,6 +635,14 @@ export const tilesContainer = css`
   }
 `;
 
+export const newAccountStyle = css`
+  color: #35819d;
+  text-align: center;
+  .span {
+    font-size: 8px;
+  }
+`;
+
 export const tileGrid = css`
   display: grid;
   grid-template-rows: repeat(2, 1fr);
@@ -683,6 +714,18 @@ export const singleTileContainer = css`
   background-image: linear-gradient(180deg, #6eb9e4 0%, #abd3cf 100%);
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+`;
+
+export const singleTilePage = css`
+  display: flex;
+  flex-direction: row;
+
+  .div {
+    font-size: 0.8em;
+    line-height: 25px;
+    padding: 3px;
+    flex-direction: row;
+  }
 `;
 
 export const profileImage = css`

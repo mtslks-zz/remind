@@ -35,16 +35,15 @@ export default function Home(props: Props) {
                 <div>
                   <a className="paragraph-text">
                     The <strong>(re)mind</strong> tracker is the easiest way to
-                    achieve a more mindful state.
+                    achieve a more mindful state. <br />
+                    Your daily progress, tracked in just 3 easy steps.
                   </a>
                 </div>
                 <p />
                 <div>
                   <a className="paragraph-text">
-                    Track your progress on a daily basis to reflect on your
-                    mood, goals, and the things you are grateful for. Review
-                    your entries over time and (re)mind yourself of the good
-                    days. It's that simple!
+                    Reflecting on mood, goals and gratitude has never been
+                    easier. Start now!
                   </a>
                 </div>
                 <div css={buttonContainer}>

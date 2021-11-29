@@ -1,7 +1,5 @@
-import { css } from '@emotion/react';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -9,19 +7,17 @@ import Layout from '../../components/Layout';
 import {
   buttonContainer,
   buttonStylesStandard,
+  buttonStylesWarning,
   headingStyle,
-  heroSection,
   heroSectionHeading,
   heroSectionHeadingImageContainer,
-  heroSectionImage,
   pageContainer,
-  tilesContainer,
+  singleTilePage,
 } from '../../styles/styles';
 import { Errors, Tile } from '../../util/types';
 
 type Props = {
   username?: string;
-  // moods: Mood;
   tiles: Tile;
   errors: Errors[];
   day: string;
@@ -29,7 +25,6 @@ type Props = {
 };
 
 export default function SingleTile(props: Props) {
-  const [showEdit, setShowEdit] = useState(true);
   const [errors, setErrors] = useState('');
 
   const router = useRouter();
@@ -55,19 +50,20 @@ export default function SingleTile(props: Props) {
           <div css={heroSectionHeading}>
             <div css={headingStyle}>
               <h2 className="header2-text">
-                Single Tile Page for {props.tiles.day}
+                Your (re)mind entry for {props.tiles.day}
               </h2>
               <div>
                 <div>Achievements: {props.tiles.achievements}</div>
                 <div>Gratitude: {props.tiles.gratitude}</div>
                 <div>Affirmations: {props.tiles.affirmations}</div>
+                <div>Daily quote: {props.tiles.quote}</div>
               </div>
-            </div>{' '}
+            </div>
             <div css={buttonContainer}>
               <div css={buttonContainer}>
                 <div>
                   <button
-                    css={buttonStylesStandard}
+                    css={buttonStylesWarning}
                     onClick={async (event) => {
                       event.preventDefault();
                       if (
@@ -93,7 +89,7 @@ export default function SingleTile(props: Props) {
 
                       const json = await response.json();
 
-                      if ('errors' in json) {
+                      if (errors in json) {
                         setErrors(json.errors[0].message);
                         return;
                       }
@@ -107,13 +103,12 @@ export default function SingleTile(props: Props) {
                 </div>
                 <div>
                   <button css={buttonStylesStandard}>
-                    <Link href="/logout">Logout</Link>
+                    <Link href="/dashboard">Back</Link>
                   </button>
                 </div>
                 <div>
-                  {' '}
-                  <button css={buttonStylesStandard}>
-                    <Link href="/dashboard">Back</Link>
+                  <button css={buttonStylesWarning}>
+                    <Link href="/logout">Logout</Link>
                   </button>
                 </div>
               </div>
@@ -157,9 +152,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     },
   );
   const tiles = await tileResponse.json();
-  // const moods = await getMood();
 
   return {
-    props: { userId: isValidSession.userId, tiles /* moods */ },
+    props: { userId: isValidSession.userId, tiles },
   };
 }

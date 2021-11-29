@@ -1,19 +1,17 @@
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useState } from 'react';
-import Header from '../components/Header';
 import Layout from '../components/Layout';
 import {
-  buttonContainer,
   buttonStylesStandard,
   heroSectionHeading,
   heroSectionHeadingImageContainer,
   heroSectionImage,
-  imageContainer,
   inputFormStyle,
+  newAccountStyle,
   pageContainer,
-  wrapper,
 } from '../styles/styles';
 import { generateCsrfSecretByToken } from '../util/auth';
 import { RegisterResponse } from './api/register';
@@ -155,6 +153,15 @@ export default function Registration(props: Props) {
                   {error}
                 </div>
                 <button css={buttonStylesStandard}>Sign Up</button>
+                <p />
+                <div css={newAccountStyle}>
+                  {' '}
+                  <Link href="/login">
+                    <a>
+                      <span>...or login here</span>
+                    </a>
+                  </Link>
+                </div>
               </form>
             </div>
           </div>

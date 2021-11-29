@@ -12,6 +12,7 @@ import {
   heroSectionHeadingImageContainer,
   heroSectionImage,
   inputFormStyle,
+  newAccountStyle,
   pageContainer,
 } from '../styles/styles';
 import { getValidSessionByToken } from '../util/database';
@@ -21,14 +22,6 @@ type Props = {
   refreshUsername: () => void;
   username?: string;
 };
-
-const newAccountStyle = css`
-  color: #35819d;
-  text-align: center;
-  .span {
-    font-size: 8px;
-  }
-`;
 
 const errorMessage = css`
   color: #ed0404;

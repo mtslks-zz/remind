@@ -18,7 +18,6 @@ const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 500,
     minHeight: 100,
-    // background: 'linear-gradient(180deg, #6eb9e4 0%, #abd3cf 100%)',
     boxShadow: '1px 1px 1px #999',
     borderRadius: '14px',
     border: '1px solid grey',

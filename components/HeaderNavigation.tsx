@@ -11,16 +11,13 @@ export default function HeaderNav(props: HeaderProps) {
   return (
     <div css={navContainer(props.open)}>
       <ul>
-        <Link href="/dashboard">
-          <a>
-            <li>Dashboard</li>
-          </a>
-        </Link>
-        <Link href="/tutorial">
-          <a>
-            <li>Tutorial</li>
-          </a>
-        </Link>
+        <li>
+          {props.username && (
+            <Link href="/dashboard" passHref>
+              My Dashboard
+            </Link>
+          )}
+        </li>
         <li>
           {props.username && (
             <Link href={`/users/${props.username}`} passHref>

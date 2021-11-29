@@ -45,7 +45,7 @@ export default function Logout(props: LogoutProps) {
                     </Link>
                   </div>
                   <div>
-                    <Link href="/">
+                    <Link href="/login">
                       <a css={buttonStylesStandard}>Login Again</a>
                     </Link>
                   </div>
